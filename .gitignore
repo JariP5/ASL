@@ -1,5 +1,5 @@
-# Ignore everyhting
-/lib/quiz.dart
+# Collaboration with Flutlab
+pubspec.yaml
 
 # Miscellaneous
 *.class
