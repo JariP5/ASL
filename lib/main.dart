@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
+import 'package:flutter/material.dart';
+
+import './dashboard.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

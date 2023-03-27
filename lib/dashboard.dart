@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+
 import './quizScreen.dart';
 
 class ASLDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        const SizedBox(height: 700),
+        const SizedBox(height: 70),
         Padding(padding: EdgeInsets.only(top: 5)),
         ElevatedButton(
           child: Text('Learn'),
           onPressed: () {},
           // on press go to new page or something
+        ),
+        SizedBox(
+          height: 50
         ),
         ElevatedButton(
           child: Text('Quiz'),
@@ -21,6 +25,9 @@ class ASLDashboard extends StatelessWidget {
             );
           },
           // on press go to new page or something
+        ),
+        SizedBox(
+          height: 50
         ),
         ElevatedButton(
           child: Text('Dictionary'),
