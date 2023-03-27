@@ -1,5 +1,6 @@
 # Collaboration with Flutlab
 pubspec.yaml
+ios/Podfile.lock
 
 # Miscellaneous
 *.class
