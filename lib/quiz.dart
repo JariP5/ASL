@@ -26,7 +26,7 @@ class Option {
 
 List<Question> questions = [
   Question(
-    text: 'What is the letter for this sign?',
+    text: 'How is the letter for this sign?',
     options: [
       const Option(text: 'A', isCorrect: false),
       const Option(text: 'B', isCorrect: false),
