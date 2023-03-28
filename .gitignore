@@ -2,7 +2,12 @@
 # pubspec.yaml
 ios/Podfile.lock
 firebase/
-ios/firebase_app_id_file.json
+ios/
+android/
+linux/
+macos/
+test/
+windows/
 
 # Miscellaneous
 *.class
