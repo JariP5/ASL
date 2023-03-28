@@ -2,8 +2,6 @@
 # pubspec.yaml
 ios/Podfile.lock
 firebase/
-ios/
-android/
 linux/
 macos/
 test/
