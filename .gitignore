@@ -1,12 +1,3 @@
-# Collaboration with Flutlab
-# pubspec.yaml
-ios/Podfile.lock
-firebase/
-linux/
-macos/
-test/
-windows/
-
 # Miscellaneous
 *.class
 *.log
