@@ -1,9 +1,35 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import './quiz.dart';
+import './dashboard.dart';
 
 // things that still need to be done:
-// have images for each question
-// randomize which questions are asked
+// randomize which questions are asked: cant be done
+// find way to reset answers once finished
+// find a way to prevent users from going back
+class QuizApp extends StatelessWidget {
+  const QuizApp({super.key});
+  // This widget is the root of your application.
+  // @override
+  //
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      // Application name
+      title: 'ASL Quiz',
+      // Application theme data, you can set the colors for the application as
+      // you want
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      // A widget which will be started on application startup
+      home: const Scaffold(
+        body: QuestionWidget(),
+      ),
+      //home: ASLHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
 class QuestionWidget extends StatefulWidget {
   const QuestionWidget({
     Key? key,
@@ -11,12 +37,14 @@ class QuestionWidget extends StatefulWidget {
 
   // should shuffle the list don't why it doesnt
   // const questions.shuffle();
+
   @override
   State<QuestionWidget> createState() => _QuestionWidgetState();
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
   late PageController _controller;
+  // could do random number from 1 to 19, then take 5
   int _questionNumber = 1;
   int _score = 0;
   bool _isLocked = false;
@@ -43,7 +71,9 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 controller: _controller,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
+                  // used to be index
                   final _question = questions[index];
+                  //final _question = questions[index];
                   return buildQuestion(_question);
                 }),
           ),
@@ -63,6 +93,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           question.text,
           style: const TextStyle(fontSize: 25),
         ),
+        Image.asset(question.imagePath, height: 100, width: 100),
         const SizedBox(height: 32),
         Expanded(
           child: OptionsWidget(
@@ -90,7 +121,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   ElevatedButton buildElevatedButton() {
     return ElevatedButton(
         onPressed: () {
-          if (_questionNumber < questions.length) {
+          if (_questionNumber < 5) {
             _controller.nextPage(
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeInExpo,
@@ -110,7 +141,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           }
         },
         child: Text(
-          _questionNumber < questions.length ? 'Next Question' : 'See Results',
+          _questionNumber < 5 ? 'Next Question' : 'See Results',
         ));
   }
 }
@@ -197,9 +228,20 @@ class ResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('You got $score/5'),
-      ),
+      body: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        Text('You got $score/5'),
+        const SizedBox(height: 400),
+        ElevatedButton(
+          child: Text('Return'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ASLDashboard()),
+            );
+          },
+          // on press go to new page or something
+        )
+      ]),
     );
   }
 }
