@@ -9,7 +9,7 @@ class ASLDashboard extends StatelessWidget {
   Widget build(BuildContext context) => Container(
       decoration: new BoxDecoration(color: kPrimaryColor),
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        const SizedBox(height: 100),
+        const SizedBox(height: 220),
         const Padding(padding: EdgeInsets.only(top: 5)),
         ElevatedButton(
           child: Text('Learn'),
