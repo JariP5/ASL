@@ -1,4 +1,5 @@
 import 'package:ASL/dict.dart';
+import 'package:ASL/constants.dart';
 import 'package:flutter/material.dart';
 import './quizScreen.dart';
 import './dict.dart';
@@ -6,7 +7,8 @@ import './dict.dart';
 class ASLDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
-          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+      decoration: new BoxDecoration(color: kPrimaryColor),
+      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
         const SizedBox(height: 100),
         const Padding(padding: EdgeInsets.only(top: 5)),
         ElevatedButton(
