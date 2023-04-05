@@ -1,7 +1,8 @@
 import 'package:ASL/dict.dart';
+import 'package:ASL/home_page.dart';
 import 'package:flutter/material.dart';
+
 import './quizScreen.dart';
-import './dict.dart';
 
 class ASLDashboard extends StatelessWidget {
   @override
@@ -11,7 +12,12 @@ class ASLDashboard extends StatelessWidget {
         const Padding(padding: EdgeInsets.only(top: 5)),
         ElevatedButton(
           child: Text('Learn'),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          },
           // on press go to new page or something
         ),
         SizedBox(
