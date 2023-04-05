@@ -63,7 +63,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const SizedBox(height: 32),
-          Text('Question $_questionNumber/5'),
+          Text('Question $_questionNumber/26'),
           const Divider(thickness: 1, color: Colors.grey),
           Expanded(
             child: PageView.builder(
@@ -121,7 +121,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   ElevatedButton buildElevatedButton() {
     return ElevatedButton(
         onPressed: () {
-          if (_questionNumber < 5) {
+          if (_questionNumber < 26) {
             _controller.nextPage(
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeInExpo,
@@ -141,7 +141,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           }
         },
         child: Text(
-          _questionNumber < 5 ? 'Next Question' : 'See Results',
+          _questionNumber < 26 ? 'Next Question' : 'See Results',
         ));
   }
 }
@@ -229,8 +229,8 @@ class ResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        Text('You got $score/5'),
-        const SizedBox(height: 400),
+        Text('You got $score/26'),
+        const SizedBox(height: 400, width: 20),
         ElevatedButton(
           child: Text('Return'),
           onPressed: () {
