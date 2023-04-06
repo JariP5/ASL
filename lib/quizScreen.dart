@@ -45,9 +45,11 @@ class QuestionWidget extends StatefulWidget {
 class _QuestionWidgetState extends State<QuestionWidget> {
   late PageController _controller;
   // could do random number from 1 to 19, then take 5
-  int _questionNumber = 1;
   int _score = 0;
   bool _isLocked = false;
+  var rng = new Random();
+  int _questionNumber = 1;
+  //int _startPosition = 1 + rng.nextInt(19);
 
   @override
   void initState() {
@@ -63,7 +65,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const SizedBox(height: 32),
-          Text('Question $_questionNumber/26'),
+          Text('Question $_questionNumber/5'),
           const Divider(thickness: 1, color: Colors.grey),
           Expanded(
             child: PageView.builder(
@@ -72,8 +74,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   // used to be index
+                  //int loopNum = 1;
+                  //if (loopNum == 1) {
+                  //  index = 1 + rng.nextInt(19);
+                  //}
                   final _question = questions[index];
                   //final _question = questions[index];
+                  //loopNum++;
                   return buildQuestion(_question);
                 }),
           ),
@@ -121,7 +128,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   ElevatedButton buildElevatedButton() {
     return ElevatedButton(
         onPressed: () {
-          if (_questionNumber < 26) {
+          if (_questionNumber < 5) {
             _controller.nextPage(
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeInExpo,
@@ -141,7 +148,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           }
         },
         child: Text(
-          _questionNumber < 26 ? 'Next Question' : 'See Results',
+          _questionNumber < 5 ? 'Next Question' : 'See Results',
         ));
   }
 }
@@ -229,7 +236,7 @@ class ResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        Text('You got $score/26'),
+        Text('You got $score/5'),
         const SizedBox(height: 400, width: 20),
         ElevatedButton(
           child: Text('Return'),
