@@ -1,5 +1,7 @@
 import 'package:ASL/dict.dart';
 import 'package:ASL/home_page.dart';
+import 'package:ASL/learning/components/body.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import './quizScreen.dart';
@@ -12,15 +14,15 @@ class ASLDashboard extends StatelessWidget {
         const Padding(padding: EdgeInsets.only(top: 5)),
         ElevatedButton(
           child: Text('Learn'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
+          onPressed: () async {
+            await availableCameras().then((value) => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => LearningScreen(cameras: value))));
           },
           // on press go to new page or something
         ),
-        SizedBox(
+        const SizedBox(
           height: 50,
         ),
         ElevatedButton(
