@@ -166,7 +166,6 @@ class CameraComponentState extends State<CameraComponent> {
         imageFormatGroup: ImageFormatGroup.yuv420);
 
     _initializeControllerFuture = _cameraController.initialize();
-    _initializeControllerFuture = _cameraController.lockCaptureOrientation();
   }
 
   @override
