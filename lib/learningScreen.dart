@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:ASL/constants.dart';
 
 class LearningScreen extends StatefulWidget {
-  const LearningScreen({Key? key, required this.cameras}) : super(key: key);
+  const LearningScreen({Key? key, required this.frontCamera}) : super(key: key);
+  final CameraDescription frontCamera;
 
-  final List<CameraDescription> cameras;
   @override
-  State<LearningScreen> createState() => _LearningScreenState(cameras);
+  // ignore: no_logic_in_create_state
+  State<LearningScreen> createState() => _LearningScreenState();
 }
 
 class _LearningScreenState extends State<LearningScreen> {
-  var cameras;
-  _LearningScreenState(this.cameras);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +40,7 @@ class _LearningScreenState extends State<LearningScreen> {
                         fontWeight: FontWeight.bold,
                         color: Colors.grey),
                   ),
-                  const SizedBox(height: 20.0),
+                  const SizedBox(height: 25.0),
                   Container(
                     width: 150,
                     height: 150,
@@ -69,26 +68,26 @@ class _LearningScreenState extends State<LearningScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               //child: ,
             ),
-            //const SizedBox(height: 20.0),
-
-            Container(
-                //margin: const EdgeInsets.only(bottom: 20, right: 20),
-                height: MediaQuery.of(context).size.height,
+            const SizedBox(height: 20.0),
+            SizedBox(
+                //color: kPrimaryColor,
+                //margin: const EdgeInsets.only(bottom: 20),
+                height: MediaQuery.of(context).size.height / 2,
                 width: MediaQuery.of(context).size.width,
                 child: Stack(
                   children: [
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        //borderRadius: BorderRadius.all(Radius.circular(20)),
                         child: Container(
-                          width: 200,
-                          height: 200,
+                          width: 350,
+                          height: 750,
                           decoration: BoxDecoration(
                             border:
-                                Border.all(width: 10, color: kSecondaryColor),
+                                Border.all(width: 7, color: kSecondaryColor),
                           ),
-                          child: CameraComponent(camera: cameras.first),
+                          child: CameraComponent(camera: widget.frontCamera),
                         ),
                       ),
                     )
@@ -137,11 +136,9 @@ class ProgressBar extends StatelessWidget {
 }
 
 class CameraComponent extends StatefulWidget {
-  final size;
   final CameraDescription camera;
 
-  const CameraComponent({Key? key, required this.camera, this.size})
-      : super(key: key);
+  const CameraComponent({Key? key, required this.camera}) : super(key: key);
 
   @override
   CameraComponentState createState() => CameraComponentState();
@@ -164,20 +161,25 @@ class CameraComponentState extends State<CameraComponent> {
   }
 
   Future initCamera(CameraDescription cameraDescription) async {
-    _cameraController =
-        CameraController(cameraDescription, ResolutionPreset.medium);
+    _cameraController = CameraController(
+        cameraDescription, ResolutionPreset.medium,
+        imageFormatGroup: ImageFormatGroup.yuv420);
 
     _initializeControllerFuture = _cameraController.initialize();
+    _initializeControllerFuture = _cameraController.lockCaptureOrientation();
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (!_cameraController.value.isInitialized) {
-      return Container();
-    }
-
-    return AspectRatio(
-        aspectRatio: _cameraController.value.aspectRatio,
-        child: CameraPreview(_cameraController));
-  }
+  Widget build(BuildContext context) => FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return AspectRatio(
+                aspectRatio: _cameraController.value.aspectRatio,
+                child: CameraPreview(_cameraController));
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      );
 }

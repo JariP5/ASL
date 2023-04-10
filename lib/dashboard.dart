@@ -1,6 +1,6 @@
 import 'package:ASL/dict.dart';
 import 'package:ASL/home_page.dart';
-import 'package:ASL/learning/components/body.dart';
+import 'package:ASL/learningScreen.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class ASLDashboard extends StatelessWidget {
             await availableCameras().then((value) => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => LearningScreen(cameras: value))));
+                    builder: (_) => LearningScreen(frontCamera: value[1]))));
           },
           // on press go to new page or something
         ),
