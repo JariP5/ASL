@@ -1,31 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:ASL/constants.dart';
+import 'package:ASL/dict.dart';
 import 'dart:math';
 import './quiz.dart';
 import './dashboard.dart';
 
-// things that still need to be done:
-// randomize which questions are asked: cant be done
-// find way to reset answers once finished
-// find a way to prevent users from going back
 class QuizApp extends StatelessWidget {
   const QuizApp({super.key});
-  // This widget is the root of your application.
-  // @override
-  //
+
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // Application name
-      title: 'ASL Quiz',
-      // Application theme data, you can set the colors for the application as
-      // you want
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      // A widget which will be started on application startup
-      home: const Scaffold(
-        body: QuestionWidget(),
-      ),
-      //home: ASLHomePage(title: 'Flutter Demo Home Page'),
+    return Scaffold(
+      body: QuestionWidget(),
     );
   }
 }
@@ -35,26 +20,26 @@ class QuestionWidget extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  // should shuffle the list don't why it doesnt
-  // const questions.shuffle();
-
   @override
   State<QuestionWidget> createState() => _QuestionWidgetState();
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
   late PageController _controller;
-  // could do random number from 1 to 19, then take 5
+  Random rnd = new Random();
   int _score = 0;
   bool _isLocked = false;
-  var rng = new Random();
   int _questionNumber = 1;
-  //int _startPosition = 1 + rng.nextInt(19);
 
   @override
   void initState() {
     super.initState();
-    _controller = PageController(initialPage: 0);
+    for (Question questionStor in questions) {
+      questionStor.isLocked = false;
+      questionStor.selectedOption = null;
+    }
+    int startingQuestion = 1 + rnd.nextInt(19);
+    _controller = PageController(initialPage: startingQuestion);
   }
 
   @override
@@ -73,14 +58,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 controller: _controller,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  // used to be index
-                  //int loopNum = 1;
-                  //if (loopNum == 1) {
-                  //  index = 1 + rng.nextInt(19);
-                  //}
                   final _question = questions[index];
-                  //final _question = questions[index];
-                  //loopNum++;
                   return buildQuestion(_question);
                 }),
           ),
@@ -181,7 +159,6 @@ class OptionsWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
-          // color for the option boxs
           color: Color(0xffcfcaca),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: color),
@@ -231,24 +208,25 @@ class ResultPage extends StatelessWidget {
   const ResultPage({Key? key, required this.score}) : super(key: key);
 
   final int score;
-
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        Text('You got $score/5'),
-        const SizedBox(height: 400, width: 20),
-        ElevatedButton(
-          child: Text('Return'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ASLDashboard()),
-            );
-          },
-          // on press go to new page or something
-        )
-      ]),
-    );
-  }
+  Widget build(BuildContext context) => Container(
+        decoration: new BoxDecoration(color: kPrimaryColor),
+        child: new Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(height: 120),
+              Text('You got $score/5'),
+              SizedBox(
+                height: 100,
+              ),
+              ElevatedButton(
+                child: Text('Return'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ]),
+      );
 }
