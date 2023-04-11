@@ -84,26 +84,27 @@ class _LearningScreenState extends State<LearningScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        bottom: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    CupertinoIcons.back,
-                    size: 35,
-                    color: kPrimaryColor,
+            Expanded(
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      CupertinoIcons.back,
+                      size: 35,
+                      color: kPrimaryColor,
+                    ),
                   ),
-                ),
-                ProgressBar(
-                  currentQuestion: currentQuestion,
-                ),
-              ],
+                  ProgressBar(
+                    currentQuestion: currentQuestion,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20.0),
             Center(
@@ -173,54 +174,6 @@ class _LearningScreenState extends State<LearningScreen> {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ResultsPage extends StatelessWidget {
-  const ResultsPage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        decoration: const BoxDecoration(color: kPrimaryColor),
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              //const SizedBox(height: 120),
-              const Text(
-                'You are done!',
-                style: TextStyle(
-                    color: kSecondaryColor,
-                    fontSize: 42,
-                    fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateColor.resolveWith(
-                        (states) => kSecondaryColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(33.0))),
-                    textStyle: MaterialStateProperty.all(
-                        const TextStyle(fontSize: 18)),
-                    minimumSize:
-                        MaterialStateProperty.all(const Size(280, 65))),
-                child: const Text('Return'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ]),
       ),
     );
   }
@@ -304,4 +257,52 @@ class CameraComponentState extends State<CameraComponent> {
           }
         },
       );
+}
+
+class ResultsPage extends StatelessWidget {
+  const ResultsPage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Container(
+        decoration: const BoxDecoration(color: kPrimaryColor),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              //const SizedBox(height: 120),
+              const Text(
+                'You are done!',
+                style: TextStyle(
+                    color: kSecondaryColor,
+                    fontSize: 42,
+                    fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => kSecondaryColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(33.0))),
+                    textStyle: MaterialStateProperty.all(
+                        const TextStyle(fontSize: 18)),
+                    minimumSize:
+                        MaterialStateProperty.all(const Size(280, 65))),
+                child: const Text('Return'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ]),
+      ),
+    );
+  }
 }
