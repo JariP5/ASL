@@ -1,3 +1,4 @@
+import 'package:ASL/constants.dart';
 import 'package:flutter/material.dart';
 
 import './dashboard.dart';
@@ -41,16 +42,34 @@ class ASLHomePage extends StatelessWidget {
           ),
         ),
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          const SizedBox(height: 400),
-          ElevatedButton(
-            child: Text('Press me!'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ASLDashboard()),
-              );
-            },
-            // on press go to new page or something
+          //const SizedBox(height: 400),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SafeArea(
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => kSecondaryColor),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(33.0))),
+                      textStyle: MaterialStateProperty.all(
+                          const TextStyle(fontSize: 18)),
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(280, 65))),
+
+                  child: const Text('START NOW!'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ASLDashboard()),
+                    );
+                  },
+                  // on press go to new page or something
+                ),
+              ),
+            ),
           )
         ]),
       );
