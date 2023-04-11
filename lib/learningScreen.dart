@@ -239,7 +239,7 @@ class ProgressBar extends StatelessWidget {
       //margin: const EdgeInsets.symmetric(horizontal: 10.0),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(90.0)),
       //width: double.infinity,
-      width: MediaQuery.of(context).size.width / 1.2,
+      width: MediaQuery.of(context).size.width / 1.3,
       height: 35,
       child: Stack(
         alignment: Alignment.centerLeft,

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ASL/constants.dart';
 import 'dart:math';
@@ -6,6 +7,7 @@ import './quiz.dart';
 class QuizApp extends StatelessWidget {
   const QuizApp({super.key});
 
+  @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: QuestionWidget(),
@@ -48,9 +50,24 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    CupertinoIcons.back,
+                    size: 35,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                ProgressBar(
+                  currentQuestion: _questionNumber - 1,
+                ),
+              ],
+            ),
             const SizedBox(height: 32),
-            Text('Question $_questionNumber/5'),
-            const Divider(thickness: 1, color: Colors.grey),
             Expanded(
               child: PageView.builder(
                   itemCount: questions.length,
@@ -138,6 +155,37 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   }
 }
 
+class ProgressBar extends StatelessWidget {
+  final int currentQuestion;
+  const ProgressBar({Key? key, required this.currentQuestion})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.hardEdge,
+      //margin: const EdgeInsets.symmetric(horizontal: 10.0),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(90.0)),
+      //width: double.infinity,
+      width: MediaQuery.of(context).size.width / 1.3,
+      height: 35,
+      child: Stack(
+        alignment: Alignment.centerLeft,
+        children: [
+          Positioned.fill(
+            child: LinearProgressIndicator(
+              //Here you pass the percentage
+              value: currentQuestion / 5,
+              color: kPrimaryColor,
+              backgroundColor: kPrimaryColor.withOpacity(0.5),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class OptionsWidget extends StatelessWidget {
   final Question question;
   final ValueChanged<Option> onClickedOption;
@@ -212,40 +260,47 @@ class OptionsWidget extends StatelessWidget {
 
 class ResultPage extends StatelessWidget {
   const ResultPage({Key? key, required this.score}) : super(key: key);
-
+  // Results had a big writing with a yellow underline due to a layout issue
+  // that can be found here: https://stackoverflow.com/questions/47114639/yellow-lines-under-text-widgets-in-flutter
+  // We need to wrap the Container into a Material so I went ahead and did that - Matt
   final int score;
   @override
-  Widget build(BuildContext context) => Container(
-        decoration: const BoxDecoration(color: kPrimaryColor),
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              //const SizedBox(height: 120),
-              Text(
-                'You got $score/5',
-                style: const TextStyle(color: kSecondaryColor),
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateColor.resolveWith(
-                        (states) => kSecondaryColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(33.0))),
-                    textStyle: MaterialStateProperty.all(
-                        const TextStyle(fontSize: 18)),
-                    minimumSize:
-                        MaterialStateProperty.all(const Size(280, 65))),
-                child: const Text('Return'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ]),
+  Widget build(BuildContext context) => Material(
+        child: Container(
+          decoration: const BoxDecoration(color: kPrimaryColor),
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                //const SizedBox(height: 120),
+                Text(
+                  'You got $score/5',
+                  style: const TextStyle(
+                      color: kSecondaryColor,
+                      fontSize: 42,
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => kSecondaryColor),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(33.0))),
+                      textStyle: MaterialStateProperty.all(
+                          const TextStyle(fontSize: 18)),
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(280, 65))),
+                  child: const Text('Return'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ]),
+        ),
       );
 }
