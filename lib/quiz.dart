@@ -38,7 +38,7 @@ List<Question> questions = [
     imagePath: 'images/c.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'J', isCorrect: false),
       const Option(text: 'K', isCorrect: false),
@@ -48,7 +48,7 @@ List<Question> questions = [
     imagePath: 'images/b.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'T', isCorrect: false),
       const Option(text: 'A', isCorrect: true),
@@ -58,7 +58,7 @@ List<Question> questions = [
     imagePath: 'images/a.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'A', isCorrect: false),
       const Option(text: 'Z', isCorrect: false),
@@ -68,7 +68,7 @@ List<Question> questions = [
     imagePath: 'images/q.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'W', isCorrect: true),
       const Option(text: 'Q', isCorrect: false),
@@ -78,7 +78,7 @@ List<Question> questions = [
     imagePath: 'images/w.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'O', isCorrect: true),
       const Option(text: 'G', isCorrect: false),
@@ -88,7 +88,7 @@ List<Question> questions = [
     imagePath: 'images/o.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'T', isCorrect: false),
       const Option(text: 'Y', isCorrect: true),
@@ -98,17 +98,7 @@ List<Question> questions = [
     imagePath: 'images/y.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
-    options: [
-      const Option(text: 'X', isCorrect: false),
-      const Option(text: 'C', isCorrect: false),
-      const Option(text: 'J', isCorrect: true),
-      const Option(text: 'A', isCorrect: false),
-    ],
-    imagePath: 'images/j.png',
-  ),
-  Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'P', isCorrect: false),
       const Option(text: 'M', isCorrect: false),
@@ -118,7 +108,7 @@ List<Question> questions = [
     imagePath: 'images/l.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'O', isCorrect: false),
       const Option(text: 'V', isCorrect: true),
@@ -128,7 +118,7 @@ List<Question> questions = [
     imagePath: 'images/v.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'X', isCorrect: false),
       const Option(text: 'G', isCorrect: false),
@@ -138,7 +128,7 @@ List<Question> questions = [
     imagePath: 'images/d.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'T', isCorrect: true),
       const Option(text: 'W', isCorrect: false),
@@ -148,7 +138,7 @@ List<Question> questions = [
     imagePath: 'images/t.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'E', isCorrect: true),
       const Option(text: 'V', isCorrect: false),
@@ -158,7 +148,7 @@ List<Question> questions = [
     imagePath: 'images/e.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'I', isCorrect: false),
       const Option(text: 'S', isCorrect: false),
@@ -168,7 +158,7 @@ List<Question> questions = [
     imagePath: 'images/h.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'D', isCorrect: false),
       const Option(text: 'I', isCorrect: false),
@@ -178,7 +168,7 @@ List<Question> questions = [
     imagePath: 'images/m.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'J', isCorrect: true),
       const Option(text: 'K', isCorrect: false),
@@ -188,7 +178,7 @@ List<Question> questions = [
     imagePath: 'images/f.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'K', isCorrect: false),
       const Option(text: 'A', isCorrect: false),
@@ -198,17 +188,7 @@ List<Question> questions = [
     imagePath: 'images/g.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
-    options: [
-      const Option(text: 'H', isCorrect: false),
-      const Option(text: 'I', isCorrect: false),
-      const Option(text: 'P', isCorrect: false),
-      const Option(text: 'Z', isCorrect: true),
-    ],
-    imagePath: 'images/z.png',
-  ),
-  Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'B', isCorrect: false),
       const Option(text: 'N', isCorrect: false),
@@ -218,7 +198,7 @@ List<Question> questions = [
     imagePath: 'images/i.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'O', isCorrect: false),
       const Option(text: 'P', isCorrect: false),
@@ -228,7 +208,7 @@ List<Question> questions = [
     imagePath: 'images/n.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'K', isCorrect: true),
       const Option(text: 'Q', isCorrect: false),
@@ -238,7 +218,7 @@ List<Question> questions = [
     imagePath: 'images/k.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'D', isCorrect: false),
       const Option(text: 'K', isCorrect: false),
@@ -248,7 +228,7 @@ List<Question> questions = [
     imagePath: 'images/r.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'S', isCorrect: false),
       const Option(text: 'P', isCorrect: true),
@@ -258,7 +238,7 @@ List<Question> questions = [
     imagePath: 'images/p.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'C', isCorrect: false),
       const Option(text: 'K', isCorrect: false),
@@ -268,7 +248,7 @@ List<Question> questions = [
     imagePath: 'images/u.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'R', isCorrect: false),
       const Option(text: 'O', isCorrect: false),
@@ -278,7 +258,7 @@ List<Question> questions = [
     imagePath: 'images/x.png',
   ),
   Question(
-    text: 'What is the letter for this signs?',
+    text: 'What is the letter for this sign?',
     options: [
       const Option(text: 'N', isCorrect: false),
       const Option(text: 'F', isCorrect: false),
