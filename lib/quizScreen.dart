@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ASL/constants.dart';
-import 'package:ASL/dict.dart';
 import 'dart:math';
 import './quiz.dart';
-import './dashboard.dart';
 
 class QuizApp extends StatelessWidget {
   const QuizApp({super.key});
 
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: QuestionWidget(),
     );
   }
@@ -26,7 +24,7 @@ class QuestionWidget extends StatefulWidget {
 
 class _QuestionWidgetState extends State<QuestionWidget> {
   late PageController _controller;
-  Random rnd = new Random();
+  Random rnd = Random();
   int _score = 0;
   bool _isLocked = false;
   int _questionNumber = 1;
@@ -44,27 +42,29 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const SizedBox(height: 32),
-          Text('Question $_questionNumber/5'),
-          const Divider(thickness: 1, color: Colors.grey),
-          Expanded(
-            child: PageView.builder(
-                itemCount: questions.length,
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final _question = questions[index];
-                  return buildQuestion(_question);
-                }),
-          ),
-          _isLocked ? buildElevatedButton() : const SizedBox.shrink(),
-          const SizedBox(height: 20),
-        ],
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            const SizedBox(height: 32),
+            Text('Question $_questionNumber/5'),
+            const Divider(thickness: 1, color: Colors.grey),
+            Expanded(
+              child: PageView.builder(
+                  itemCount: questions.length,
+                  controller: _controller,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final _question = questions[index];
+                    return buildQuestion(_question);
+                  }),
+            ),
+            _isLocked ? buildElevatedButton() : const SizedBox.shrink(),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
@@ -76,9 +76,9 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         const SizedBox(height: 32),
         Text(
           question.text,
-          style: const TextStyle(fontSize: 25),
+          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
-        Image.asset(question.imagePath, height: 100, width: 100),
+        Image.asset(question.imagePath, height: 150, width: 150),
         const SizedBox(height: 32),
         Expanded(
           child: OptionsWidget(
@@ -105,6 +105,14 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   ElevatedButton buildElevatedButton() {
     return ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateColor.resolveWith((states) => kSecondaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(33.0))),
+            textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 18)),
+            minimumSize: MaterialStateProperty.all(const Size(150, 45))),
         onPressed: () {
           if (_questionNumber < 5) {
             _controller.nextPage(
@@ -125,9 +133,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             );
           }
         },
-        child: Text(
-          _questionNumber < 5 ? 'Next Question' : 'See Results',
-        ));
+        child: Text(_questionNumber < 5 ? 'NEXT' : 'See Results',
+            style: const TextStyle(fontWeight: FontWeight.bold)));
   }
 }
 
@@ -159,16 +166,15 @@ class OptionsWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
-          color: Color(0xffcfcaca),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color),
+          color: kPrimaryColor,
+          borderRadius: BorderRadius.circular(33),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               option.text,
-              style: const TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             getIconForOption(option, question),
           ],
@@ -210,19 +216,32 @@ class ResultPage extends StatelessWidget {
   final int score;
   @override
   Widget build(BuildContext context) => Container(
-        decoration: new BoxDecoration(color: kPrimaryColor),
-        child: new Column(
+        decoration: const BoxDecoration(color: kPrimaryColor),
+        child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(height: 120),
-              Text('You got $score/5'),
-              SizedBox(
+              //const SizedBox(height: 120),
+              Text(
+                'You got $score/5',
+                style: const TextStyle(color: kSecondaryColor),
+              ),
+              const SizedBox(
                 height: 100,
               ),
               ElevatedButton(
-                child: Text('Return'),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => kSecondaryColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(33.0))),
+                    textStyle: MaterialStateProperty.all(
+                        const TextStyle(fontSize: 18)),
+                    minimumSize:
+                        MaterialStateProperty.all(const Size(280, 65))),
+                child: const Text('Return'),
                 onPressed: () {
                   Navigator.pop(context);
                 },

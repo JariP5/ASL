@@ -52,7 +52,7 @@ class _ASLDictionaryScreenState extends State<ASLDictionaryScreen> {
       appBar: AppBar(
         title: TextField(
           controller: _searchController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'Search...',
             border: InputBorder.none,
             icon: Icon(Icons.search),
@@ -120,7 +120,7 @@ class Dictionary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Dictionary'),
+        title: const Text('My Dictionary'),
       ),
       body: ListView.builder(
         itemCount: _dictionary.length,

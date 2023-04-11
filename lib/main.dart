@@ -14,13 +14,14 @@ class MyApp extends StatelessWidget {
   // @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, // Remove the debug banner
       // Application name
       title: 'ASLearning',
       // Application theme data, you can set the colors for the application as
       // you want
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          colorScheme: ColorScheme.fromSwatch()
+              .copyWith(primary: kPrimaryColor, secondary: kSecondaryColor)),
       // A widget which will be started on application startup
       home: const ASLHomePage(title: 'ASL Home Page'),
     );
@@ -59,18 +60,21 @@ class ASLHomePage extends StatelessWidget {
                       minimumSize:
                           MaterialStateProperty.all(const Size(280, 65))),
 
-                  child: const Text('START NOW!'),
+                  child: const Text('START NOW!',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ASLDashboard()),
+                      MaterialPageRoute(
+                          builder: (context) => const ASLDashboard()),
                     );
                   },
                   // on press go to new page or something
                 ),
               ),
             ),
-          )
+          ),
+          //const SizedBox(height: 50),
         ]),
       );
 }
