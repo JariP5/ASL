@@ -1,5 +1,3 @@
-
-
 class Question {
   final String text;
   final List<Option> options;
@@ -170,7 +168,7 @@ List<Question> questions = [
   Question(
     text: 'What is the letter for this sign?',
     options: [
-      const Option(text: 'J', isCorrect: true),
+      const Option(text: 'F', isCorrect: true),
       const Option(text: 'K', isCorrect: false),
       const Option(text: 'W', isCorrect: false),
       const Option(text: 'Y', isCorrect: false),
@@ -222,7 +220,7 @@ List<Question> questions = [
     options: [
       const Option(text: 'D', isCorrect: false),
       const Option(text: 'K', isCorrect: false),
-      const Option(text: 'J', isCorrect: true),
+      const Option(text: 'R', isCorrect: true),
       const Option(text: 'Y', isCorrect: false),
     ],
     imagePath: 'images/r.png',
