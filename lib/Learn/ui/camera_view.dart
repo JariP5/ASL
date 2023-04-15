@@ -1,7 +1,5 @@
-//import 'package:ASL/camera_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-
 class CameraView extends StatefulWidget {
   final CameraDescription camera;
 
