@@ -1,7 +1,7 @@
-import 'package:ASL/constants.dart';
+import 'package:ASL/Style/colors.dart';
 import 'package:flutter/material.dart';
 
-import './dashboard.dart';
+import './Dashboard/dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
