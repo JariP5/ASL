@@ -26,6 +26,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.6.1
   firebase_ml_model_downloader: ^0.2.0+10
+  tflite_flutter: ^0.9.1
+  tflite_flutter_helper: ^0.2.1
+  image: ^3.3.0
 
 dev_dependencies:
   flutter_test:
@@ -49,7 +52,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - asset/
+    - assets/
     - images/ASLearning-logos.jpeg
     - images/a.png
     - images/b.png

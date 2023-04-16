@@ -1,7 +1,6 @@
 import 'package:ASL/Dictionary/dict.dart';
-import 'package:ASL/Learn/ui/learn_view.dart';
+import 'package:ASL/Learn/ui/home_view.dart';
 import 'package:ASL/Style/colors.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import '../Quiz/quizScreen.dart';
@@ -23,11 +22,15 @@ class ASLDashboard extends StatelessWidget {
               'LEARN',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            onPressed: () async {
-              await availableCameras().then((value) => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => LearnView(frontCamera: value[1]))));
+            onPressed: () {
+              // await availableCameras().then((value) => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (_) => LearnView(frontCamera: value[1]))));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeView()),
+              );
             },
           ),
           const SizedBox(
