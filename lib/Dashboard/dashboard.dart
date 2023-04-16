@@ -1,5 +1,5 @@
 import 'package:ASL/Dictionary/dict.dart';
-import 'package:ASL/Learn/ui/home_view.dart';
+import 'package:ASL/Learn/ui/bew.dart';
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +29,7 @@ class ASLDashboard extends StatelessWidget {
               //         builder: (_) => LearnView(frontCamera: value[1]))));
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomeView()),
+                MaterialPageRoute(builder: (context) => BewView()),
               );
             },
           ),
