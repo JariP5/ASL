@@ -1,22 +1,23 @@
-import 'package:ASL/Learn/ui/camera_view.dart';
+import 'package:ASL/Learn/tflite/recognition.dart';
+import 'package:ASL/Learn/ui/camera/box_widget.dart';
+import 'package:ASL/Learn/ui/camera/camera_view.dart';
 import 'package:ASL/Learn/ui/progress_bar.dart';
 import 'package:ASL/Learn/ui/result_page.dart';
 import 'package:ASL/Quiz/quiz.dart';
 import 'package:ASL/Style/colors.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// [LearnView] stacks [CameraView] and [BoxWidget]s with bottom sheet for stats
 class LearnView extends StatefulWidget {
-  const LearnView({Key? key, required this.frontCamera}) : super(key: key);
-  final CameraDescription frontCamera;
+  const LearnView({super.key});
 
   @override
-  // ignore: no_logic_in_create_state
-  State<LearnView> createState() => _LearnViewState();
+  _LearnViewState createState() => _LearnViewState();
 }
 
 class _LearnViewState extends State<LearnView> {
+
   int currentQuestion = 0;
   List<String> imagePaths = [
     'images/a.png',
@@ -49,29 +50,48 @@ class _LearnViewState extends State<LearnView> {
     currentQuestion++;
   }
 
+  /// Results to draw bounding boxes
+  List<Recognition>? results;
+
+  /// Scaffold Key
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   SizedBox buildCameraPreview(BuildContext context) {
     return SizedBox(
-        height: MediaQuery.of(context).size.height / 2,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                child: Container(
-                  margin: const EdgeInsets.all(30.0),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 2,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 7, color: kSecondaryColor),
+      height: MediaQuery.of(context).size.height / 2,
+      width: MediaQuery.of(context).size.width,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              child: Container(
+                margin: const EdgeInsets.all(30.0),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 2,
+                // decoration: BoxDecoration(
+                //   border: Border.all(width: 7, color: kSecondaryColor),
+                // ),
+                child: Scaffold(
+                    key: scaffoldKey,
+                    backgroundColor: Colors.black,
+                    body: Stack(
+                      children: <Widget>[
+                        // Camera View
+                        CameraView(resultsCallback),
+
+                        // Bounding boxes
+                        boundingBoxes(results),
+                      ],
+                    ),
                   ),
-                  child: CameraView(camera: widget.frontCamera),
-                ),
               ),
-            )
-          ],
-        ));
+            ),
+          ),
+        ],
+      )
+    );
   }
 
   @override
@@ -170,5 +190,26 @@ class _LearnViewState extends State<LearnView> {
         ),
       ),
     );
+  }
+  
+  /// Returns Stack of bounding boxes
+  Widget boundingBoxes(List<Recognition>? results) {
+    if (results == null) {
+      return Container();
+    }
+    return Stack(
+      children: results
+          .map((e) => BoxWidget(
+                result: e,
+              ))
+          .toList(),
+    );
+  }
+
+  /// Callback to get inference results from [CameraView]
+  void resultsCallback(List<Recognition> results) {
+    setState(() {
+      this.results = results;
+    });
   }
 }

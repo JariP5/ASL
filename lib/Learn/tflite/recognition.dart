@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:ASL/Learn/ui/camera_view_singleton.dart';
+import 'package:ASL/Learn/ui/camera/camera_view_singleton.dart';
 import 'package:flutter/cupertino.dart';
 
 /// Represents the recognition output from the model

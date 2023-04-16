@@ -1,15 +1,15 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-class CameraView extends StatefulWidget {
+class CameraViewUnused extends StatefulWidget {
   final CameraDescription camera;
 
-  const CameraView({Key? key, required this.camera}) : super(key: key);
+  const CameraViewUnused({Key? key, required this.camera}) : super(key: key);
 
   @override
-  CameraViewState createState() => CameraViewState();
+  CameraViewUnusedState createState() => CameraViewUnusedState();
 }
 
-class CameraViewState extends State<CameraView> {
+class CameraViewUnusedState extends State<CameraViewUnused> {
   late CameraController _cameraController;
   late Future<void> _initializeControllerFuture;
 
@@ -28,7 +28,7 @@ class CameraViewState extends State<CameraView> {
   Future initCamera(CameraDescription cameraDescription) async {
     _cameraController = CameraController(
         cameraDescription, ResolutionPreset.medium,
-        imageFormatGroup: ImageFormatGroup.yuv420);
+        imageFormatGroup: ImageFormatGroup.bgra8888);
 
     _initializeControllerFuture = _cameraController.initialize();
   }

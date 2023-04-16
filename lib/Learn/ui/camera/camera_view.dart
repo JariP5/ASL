@@ -2,27 +2,23 @@ import 'dart:isolate';
 
 import 'package:ASL/Learn/tflite/classifier.dart';
 import 'package:ASL/Learn/tflite/recognition.dart';
-import 'package:ASL/Learn/tflite/stats.dart';
-import 'package:ASL/Learn/ui/camera_view_singleton.dart';
+import 'package:ASL/Learn/ui/camera/camera_view_singleton.dart';
 import 'package:ASL/Learn/utils/isolate_utils.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-/// [CameraViewCopy] sends each frame for inference
-class CameraViewCopy extends StatefulWidget {
+/// [CameraView] sends each frame for inference
+class CameraView extends StatefulWidget {
   /// Callback to pass results after inference to [HomeView]
   final Function(List<Recognition> recognitions) resultsCallback;
 
-  /// Callback to inference stats to [HomeView]
-  final Function(Stats stats) statsCallback;
-
   /// Constructor
-  const CameraViewCopy(this.resultsCallback, this.statsCallback);
+  const CameraView(this.resultsCallback, {super.key});
   @override
-  _CameraViewCopyState createState() => _CameraViewCopyState();
+  _CameraViewState createState() => _CameraViewState();
 }
 
-class _CameraViewCopyState extends State<CameraViewCopy> with WidgetsBindingObserver {
+class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   /// List of available cameras
   List<CameraDescription>? cameras;
 
@@ -67,7 +63,7 @@ class _CameraViewCopyState extends State<CameraViewCopy> with WidgetsBindingObse
 
     // cameras[0] for rear-camera
     cameraController =
-        CameraController(cameras![0], ResolutionPreset.low, enableAudio: false);
+        CameraController(cameras![1], ResolutionPreset.low, enableAudio: false);
 
     cameraController?.initialize().then((_) async {
       // Stream of image passed to [onLatestImageAvailable] callback
@@ -113,8 +109,6 @@ class _CameraViewCopyState extends State<CameraViewCopy> with WidgetsBindingObse
         predicting = true;
       });
 
-      var uiThreadTimeStart = DateTime.now().millisecondsSinceEpoch;
-
       // Data to be passed to inference isolate
       var isolateData = IsolateData(
           cameraImage, classifier!.interpreter!.address, classifier!.labels!);
@@ -126,15 +120,8 @@ class _CameraViewCopyState extends State<CameraViewCopy> with WidgetsBindingObse
       /// perform inference in separate isolate
       Map<String, dynamic> inferenceResults = await inference(isolateData);
 
-      var uiThreadInferenceElapsedTime =
-          DateTime.now().millisecondsSinceEpoch - uiThreadTimeStart;
-
       // pass results to HomeView
       widget.resultsCallback(inferenceResults["recognitions"]);
-
-      // pass stats to HomeView
-      widget.statsCallback((inferenceResults["stats"] as Stats)
-        ..totalElapsedTime = uiThreadInferenceElapsedTime);
 
       // set predicting to false to allow new frames
       setState(() {
