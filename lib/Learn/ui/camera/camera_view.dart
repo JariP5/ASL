@@ -63,7 +63,8 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
     // cameras[0] for rear-camera
     cameraController =
-        CameraController(cameras![1], ResolutionPreset.low, enableAudio: false);
+        CameraController(cameras![1], ResolutionPreset.low, imageFormatGroup: ImageFormatGroup.bgra8888, enableAudio: false);
+        
 
     cameraController?.initialize().then((_) async {
       // Stream of image passed to [onLatestImageAvailable] callback
@@ -92,9 +93,10 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       return Container();
     }
 
-    return AspectRatio(
-        aspectRatio: cameraController!.value.aspectRatio,
-        child: CameraPreview(cameraController!));
+    return CameraPreview(cameraController!);
+    // return AspectRatio(
+    //     aspectRatio: cameraController!.value.aspectRatio,
+    //     child: CameraPreview(cameraController!));
   }
 
   /// Callback to receive each frame [CameraImage] perform inference on it

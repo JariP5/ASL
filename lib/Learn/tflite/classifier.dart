@@ -137,8 +137,8 @@ class Classifier {
       boundingBoxAxis: 2,
       boundingBoxType: BoundingBoxType.BOUNDARIES,
       coordinateType: CoordinateType.RATIO,
-      height: INPUT_SIZE,
-      width: INPUT_SIZE,
+      height: 200,
+      width: 200,
     );
 
     List<Recognition> recognitions = [];

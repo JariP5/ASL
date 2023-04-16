@@ -68,8 +68,8 @@ class _LearnViewState extends State<LearnView> {
               borderRadius: const BorderRadius.all(Radius.circular(20)),
               child: Container(
                 margin: const EdgeInsets.all(30.0),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2,
+                width: 283,
+                height: 352,
                 // decoration: BoxDecoration(
                 //   border: Border.all(width: 7, color: kSecondaryColor),
                 // ),
