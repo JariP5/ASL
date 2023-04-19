@@ -45,6 +45,7 @@ class _LearnViewState extends State<LearnView> {
     'images/y.png',
   ];
 
+// Move to the next question
   void _nextQuestion() {
     currentQuestion++;
   }
@@ -55,8 +56,10 @@ class _LearnViewState extends State<LearnView> {
   /// Scaffold Key
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
+  // Returns the square borded camera preview
   SizedBox buildCameraPreview(BuildContext context) {
     return SizedBox(
+        // Setting its height and width
         height: MediaQuery.of(context).size.height / 2,
         width: MediaQuery.of(context).size.width,
         child: Stack(
@@ -102,16 +105,19 @@ class _LearnViewState extends State<LearnView> {
             Expanded(
               child: Row(
                 children: [
+                  // Return to main menu
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
+                    // Set return button styling
                     icon: const Icon(
                       CupertinoIcons.back,
                       size: 35,
                       color: kPrimaryColor,
                     ),
                   ),
+                  // Call progress bar function
                   ProgressBar(
                     currentQuestion: currentQuestion,
                   ),
@@ -123,6 +129,7 @@ class _LearnViewState extends State<LearnView> {
               child: Column(
                 children: [
                   const Text(
+                    // Prompt user to sign the letter to the camera
                     "Your Turn",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -138,6 +145,8 @@ class _LearnViewState extends State<LearnView> {
                   Container(
                     width: 150,
                     height: 150,
+                    // Display the ASL letter to be handsigned by the user
+                    // with the passed in imagePath
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: kPrimaryColor, width: 5),
@@ -148,6 +157,8 @@ class _LearnViewState extends State<LearnView> {
                         )),
                   ),
                   const SizedBox(height: 20.0),
+                  // Display the letter to be handsigned by using the first
+                  // letter of the image from imagePath (i.e. "A" from "/images/A.png")
                   Text(
                     imagePaths[currentQuestion].substring(7, 8).toUpperCase(),
                     style: const TextStyle(
