@@ -33,7 +33,7 @@ class ASLDashboard extends StatelessWidget {
               //         builder: (_) => LearnView(frontCamera: value[1]))));
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LearnView()),
+                MaterialPageRoute(builder: (context) => const LearnScreen()),
               );
             },
           ),
