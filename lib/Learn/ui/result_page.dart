@@ -16,7 +16,6 @@ class ResultsPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              //const SizedBox(height: 120),
               const Text(
                 'You are done!',
                 style: TextStyle(
@@ -27,6 +26,7 @@ class ResultsPage extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
+              // Styling of Button that will take the user back to the main menu
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateColor.resolveWith(
