@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -166,9 +165,7 @@ class ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
-      //margin: const EdgeInsets.symmetric(horizontal: 10.0),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(90.0)),
-      //width: double.infinity,
       width: MediaQuery.of(context).size.width / 1.3,
       height: 35,
       child: Stack(
@@ -176,7 +173,8 @@ class ProgressBar extends StatelessWidget {
         children: [
           Positioned.fill(
             child: LinearProgressIndicator(
-              //Here you pass the percentage
+              // Here you pass the percentage that reflects how much the
+              // the progress bar should be filled.
               value: currentQuestion / 5,
               color: kPrimaryColor,
               backgroundColor: kPrimaryColor.withOpacity(0.5),

@@ -17,7 +17,6 @@ class LearnView extends StatefulWidget {
 }
 
 class _LearnViewState extends State<LearnView> {
-
   int currentQuestion = 0;
   List<String> imagePaths = [
     'images/a.png',
@@ -58,22 +57,22 @@ class _LearnViewState extends State<LearnView> {
 
   SizedBox buildCameraPreview(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 2,
-      width: MediaQuery.of(context).size.width,
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-              child: Container(
-                margin: const EdgeInsets.all(30.0),
-                width: 283,
-                height: 352,
-                // decoration: BoxDecoration(
-                //   border: Border.all(width: 7, color: kSecondaryColor),
-                // ),
-                child: Scaffold(
+        height: MediaQuery.of(context).size.height / 2,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: Container(
+                  margin: const EdgeInsets.all(30.0),
+                  width: 283,
+                  height: 352,
+                  // decoration: BoxDecoration(
+                  //   border: Border.all(width: 7, color: kSecondaryColor),
+                  // ),
+                  child: Scaffold(
                     key: scaffoldKey,
                     backgroundColor: Colors.black,
                     body: Stack(
@@ -86,12 +85,11 @@ class _LearnViewState extends State<LearnView> {
                       ],
                     ),
                   ),
+                ),
               ),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 
   @override
@@ -191,7 +189,7 @@ class _LearnViewState extends State<LearnView> {
       ),
     );
   }
-  
+
   /// Returns Stack of bounding boxes
   Widget boundingBoxes(List<Recognition>? results) {
     if (results == null) {
