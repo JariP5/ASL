@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ASLDictionaryScreen extends StatefulWidget {
+  // creates the screen
   @override
   _ASLDictionaryScreenState createState() => _ASLDictionaryScreenState();
 }
 
+// class that that contains the search bar and the list of ASL images and their corresponding letters
 class _ASLDictionaryScreenState extends State<ASLDictionaryScreen> {
   TextEditingController _searchController = TextEditingController();
+  // user input
   String _searchText = '';
 
+  // dictionary which assigns ASL images to their corresponding letters
   final Map<String, String> _Dictionary = {
     'images/a.png': 'A',
     'images/b.png': 'B',
@@ -36,29 +40,34 @@ class _ASLDictionaryScreenState extends State<ASLDictionaryScreen> {
     'images/y.png': 'Y',
   };
 
+  // listens for user input
   @override
   void initState() {
     super.initState();
     _searchController.addListener(() {
       setState(() {
+        // sets the seach bar to reflect use input
         _searchText = _searchController.text;
       });
     });
   }
 
+  //. The ListView .
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
+          // used to get the text value entered by the user
           controller: _searchController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             hintText: 'Search...',
             border: InputBorder.none,
             icon: Icon(Icons.search),
           ),
         ),
       ),
+      // displays a list of dictionary images
       body: ListView(
         children: _Dictionary.entries
             .map((entry) => _buildDictionaryRow(entry.key, entry.value))
@@ -67,12 +76,15 @@ class _ASLDictionaryScreenState extends State<ASLDictionaryScreen> {
     );
   }
 
+  // called for each dictonary item to build a row in the list
   Widget _buildDictionaryRow(String imagePath, String text) {
     if (_searchText.isNotEmpty &&
         !text.toLowerCase().contains(_searchText.toLowerCase())) {
       return Container();
     }
 
+    // visual specifics of each row and how each dictionary image
+    // will appear to the user
     return Row(
       children: [
         Image.asset(imagePath, height: 100, width: 100),
@@ -84,55 +96,6 @@ class _ASLDictionaryScreenState extends State<ASLDictionaryScreen> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class Dictionary extends StatelessWidget {
-  final Map<String, String> _dictionary = {
-    'A': 'assets/images/a.png',
-    'B': 'assets/images/b.png',
-    'C': 'assets/images/c.png',
-    'D': 'assets/images/d.png',
-    'E': 'assets/images/e.png',
-    'F': 'assets/images/f.png',
-    'G': 'assets/images/g.png',
-    'H': 'assets/images/h.png',
-    'I': 'assets/images/i.png',
-    'K': 'assets/images/k.png',
-    'L': 'assets/images/l.png',
-    'M': 'assets/images/m.png',
-    'N': 'assets/images/n.png',
-    'O': 'assets/images/o.png',
-    'P': 'assets/images/p.png',
-    'Q': 'assets/images/q.png',
-    'R': 'assets/images/r.png',
-    'S': 'assets/images/s.png',
-    'T': 'assets/images/t.png',
-    'U': 'assets/images/u.png',
-    'V': 'assets/images/v.png',
-    'W': 'assets/images/w.png',
-    'X': 'assets/images/x.png',
-    'Y': 'assets/images/y.png',
-  };
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Dictionary'),
-      ),
-      body: ListView.builder(
-        itemCount: _dictionary.length,
-        itemBuilder: (context, index) {
-          final key = _dictionary.keys.elementAt(index);
-          final value = _dictionary[key];
-          return ListTile(
-            leading: Image.asset('assets/images/a.png'),
-            title: Text(key),
-          );
-        },
-      ),
     );
   }
 }
