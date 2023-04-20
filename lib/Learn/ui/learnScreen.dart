@@ -6,44 +6,44 @@ import 'package:ASL/Style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/// [LearnView] stacks [CameraView] and [BoxWidget]s with bottom sheet for stats
-class LearnView extends StatefulWidget {
-  const LearnView({super.key});
+/// [LearnScreen] stacks [CameraView] and [BoxWidget]s with bottom sheet for stats
+class LearnScreen extends StatefulWidget {
+  const LearnScreen({super.key});
 
   @override
-  _LearnViewState createState() => _LearnViewState();
+  _LearnScreenState createState() => _LearnScreenState();
 }
 
-class _LearnViewState extends State<LearnView> {
-
+class _LearnScreenState extends State<LearnScreen> {
   int currentQuestion = 0;
   List<String> imagePaths = [
-    'images/a.png',
-    'images/b.png',
-    'images/c.png',
-    'images/d.png',
-    'images/e.png',
-    'images/f.png',
-    'images/g.png',
-    'images/h.png',
-    'images/i.png',
-    'images/k.png',
-    'images/l.png',
-    'images/m.png',
-    'images/n.png',
-    'images/o.png',
-    'images/p.png',
-    'images/q.png',
-    'images/r.png',
-    'images/s.png',
-    'images/t.png',
-    'images/u.png',
-    'images/v.png',
-    'images/w.png',
-    'images/x.png',
-    'images/y.png',
+    'assets/images/a.png',
+    'assets/images/b.png',
+    'assets/images/c.png',
+    'assets/images/d.png',
+    'assets/images/e.png',
+    'assets/images/f.png',
+    'assets/images/g.png',
+    'assets/images/h.png',
+    'assets/images/i.png',
+    'assets/images/k.png',
+    'assets/images/l.png',
+    'assets/images/m.png',
+    'assets/images/n.png',
+    'assets/images/o.png',
+    'assets/images/p.png',
+    'assets/images/q.png',
+    'assets/images/r.png',
+    'assets/images/s.png',
+    'assets/images/t.png',
+    'assets/images/u.png',
+    'assets/images/v.png',
+    'assets/images/w.png',
+    'assets/images/x.png',
+    'assets/images/y.png',
   ];
 
+// Move to the next question
   void _nextQuestion() {
     currentQuestion++;
   }
@@ -51,6 +51,7 @@ class _LearnViewState extends State<LearnView> {
   /// Scaffold Key
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
+  // Returns the square borded camera preview
   SizedBox buildCameraPreview(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height / 2,
@@ -75,12 +76,11 @@ class _LearnViewState extends State<LearnView> {
                       ],
                     ),
                   ),
+                ),
               ),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 
   @override
@@ -93,16 +93,19 @@ class _LearnViewState extends State<LearnView> {
             Expanded(
               child: Row(
                 children: [
+                  // Return to main menu
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
+                    // Set return button styling
                     icon: const Icon(
                       CupertinoIcons.back,
                       size: 35,
                       color: kPrimaryColor,
                     ),
                   ),
+                  // Call progress bar function
                   ProgressBar(
                     currentQuestion: currentQuestion,
                   ),
@@ -114,6 +117,7 @@ class _LearnViewState extends State<LearnView> {
               child: Column(
                 children: [
                   const Text(
+                    // Prompt user to sign the letter to the camera
                     "Your Turn",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -129,6 +133,8 @@ class _LearnViewState extends State<LearnView> {
                   Container(
                     width: 150,
                     height: 150,
+                    // Display the ASL letter to be handsigned by the user
+                    // with the passed in imagePath
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: kPrimaryColor, width: 5),
@@ -139,8 +145,10 @@ class _LearnViewState extends State<LearnView> {
                         )),
                   ),
                   const SizedBox(height: 20.0),
+                  // Display the letter to be handsigned by using the first
+                  // letter of the image from imagePath (i.e. "A" from "assets/images/A.png")
                   Text(
-                    imagePaths[currentQuestion].substring(7, 8).toUpperCase(),
+                    imagePaths[currentQuestion].substring(14, 15).toUpperCase(),
                     style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,

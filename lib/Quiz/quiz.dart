@@ -33,7 +33,7 @@ List<Question> questions = [
       const Option(text: 'C', isCorrect: true),
       const Option(text: 'D', isCorrect: false),
     ],
-    imagePath: 'images/c.png',
+    imagePath: 'assets/images/c.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -43,7 +43,7 @@ List<Question> questions = [
       const Option(text: 'P', isCorrect: false),
       const Option(text: 'B', isCorrect: true),
     ],
-    imagePath: 'images/b.png',
+    imagePath: 'assets/images/b.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -53,7 +53,7 @@ List<Question> questions = [
       const Option(text: 'I', isCorrect: false),
       const Option(text: 'M', isCorrect: false),
     ],
-    imagePath: 'images/a.png',
+    imagePath: 'assets/images/a.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -63,7 +63,7 @@ List<Question> questions = [
       const Option(text: 'Q', isCorrect: true),
       const Option(text: 'X', isCorrect: false),
     ],
-    imagePath: 'images/q.png',
+    imagePath: 'assets/images/q.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -73,7 +73,7 @@ List<Question> questions = [
       const Option(text: 'E', isCorrect: false),
       const Option(text: 'R', isCorrect: false),
     ],
-    imagePath: 'images/w.png',
+    imagePath: 'assets/images/w.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -83,7 +83,7 @@ List<Question> questions = [
       const Option(text: 'J', isCorrect: false),
       const Option(text: 'H', isCorrect: false),
     ],
-    imagePath: 'images/o.png',
+    imagePath: 'assets/images/o.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -93,7 +93,7 @@ List<Question> questions = [
       const Option(text: 'U', isCorrect: false),
       const Option(text: 'I', isCorrect: false),
     ],
-    imagePath: 'images/y.png',
+    imagePath: 'assets/images/y.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -103,7 +103,7 @@ List<Question> questions = [
       const Option(text: 'K', isCorrect: false),
       const Option(text: 'L', isCorrect: true),
     ],
-    imagePath: 'images/l.png',
+    imagePath: 'assets/images/l.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -113,7 +113,7 @@ List<Question> questions = [
       const Option(text: 'B', isCorrect: false),
       const Option(text: 'N', isCorrect: false),
     ],
-    imagePath: 'images/v.png',
+    imagePath: 'assets/images/v.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -123,7 +123,7 @@ List<Question> questions = [
       const Option(text: 'D', isCorrect: true),
       const Option(text: 'Y', isCorrect: false),
     ],
-    imagePath: 'images/d.png',
+    imagePath: 'assets/images/d.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -133,7 +133,7 @@ List<Question> questions = [
       const Option(text: 'H', isCorrect: false),
       const Option(text: 'Z', isCorrect: false),
     ],
-    imagePath: 'images/t.png',
+    imagePath: 'assets/images/t.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -143,7 +143,7 @@ List<Question> questions = [
       const Option(text: 'D', isCorrect: false),
       const Option(text: 'O', isCorrect: false),
     ],
-    imagePath: 'images/e.png',
+    imagePath: 'assets/images/e.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -153,7 +153,7 @@ List<Question> questions = [
       const Option(text: 'H', isCorrect: true),
       const Option(text: 'G', isCorrect: false),
     ],
-    imagePath: 'images/h.png',
+    imagePath: 'assets/images/h.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -163,7 +163,7 @@ List<Question> questions = [
       const Option(text: 'V', isCorrect: false),
       const Option(text: 'M', isCorrect: true),
     ],
-    imagePath: 'images/m.png',
+    imagePath: 'assets/images/m.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -173,7 +173,7 @@ List<Question> questions = [
       const Option(text: 'W', isCorrect: false),
       const Option(text: 'Y', isCorrect: false),
     ],
-    imagePath: 'images/f.png',
+    imagePath: 'assets/images/f.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -183,7 +183,7 @@ List<Question> questions = [
       const Option(text: 'B', isCorrect: false),
       const Option(text: 'G', isCorrect: true),
     ],
-    imagePath: 'images/g.png',
+    imagePath: 'assets/images/g.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -193,7 +193,7 @@ List<Question> questions = [
       const Option(text: 'R', isCorrect: false),
       const Option(text: 'I', isCorrect: true),
     ],
-    imagePath: 'images/i.png',
+    imagePath: 'assets/images/i.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -203,7 +203,7 @@ List<Question> questions = [
       const Option(text: 'T', isCorrect: false),
       const Option(text: 'N', isCorrect: true),
     ],
-    imagePath: 'images/n.png',
+    imagePath: 'assets/images/n.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -213,7 +213,7 @@ List<Question> questions = [
       const Option(text: 'I', isCorrect: false),
       const Option(text: 'O', isCorrect: false),
     ],
-    imagePath: 'images/k.png',
+    imagePath: 'assets/images/k.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -223,7 +223,7 @@ List<Question> questions = [
       const Option(text: 'R', isCorrect: true),
       const Option(text: 'Y', isCorrect: false),
     ],
-    imagePath: 'images/r.png',
+    imagePath: 'assets/images/r.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -233,7 +233,7 @@ List<Question> questions = [
       const Option(text: 'U', isCorrect: false),
       const Option(text: 'A', isCorrect: false),
     ],
-    imagePath: 'images/p.png',
+    imagePath: 'assets/images/p.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -243,7 +243,7 @@ List<Question> questions = [
       const Option(text: 'V', isCorrect: false),
       const Option(text: 'U', isCorrect: true),
     ],
-    imagePath: 'images/u.png',
+    imagePath: 'assets/images/u.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -253,7 +253,7 @@ List<Question> questions = [
       const Option(text: 'X', isCorrect: true),
       const Option(text: 'V', isCorrect: false),
     ],
-    imagePath: 'images/x.png',
+    imagePath: 'assets/images/x.png',
   ),
   Question(
     text: 'What is the letter for this sign?',
@@ -263,6 +263,6 @@ List<Question> questions = [
       const Option(text: 'S', isCorrect: true),
       const Option(text: 'M', isCorrect: false),
     ],
-    imagePath: 'images/s.png',
+    imagePath: 'assets/images/s.png',
   ),
 ];

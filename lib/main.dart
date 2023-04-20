@@ -1,6 +1,5 @@
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/material.dart';
-
 import './Dashboard/dashboard.dart';
 
 void main() async {
@@ -23,31 +22,34 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(primary: kPrimaryColor, secondary: kSecondaryColor)),
       // A widget which will be started on application startup
-      home: const ASLHomePage(title: 'ASL Home Page'),
+      home: const ASLSplashScreen(title: 'ASL Home Page'),
     );
   }
 }
 
-class ASLHomePage extends StatelessWidget {
+// This class holds the info for the splash screen of the app and prompts
+// the user to be taken to the main menu
+class ASLSplashScreen extends StatelessWidget {
   final String title;
-  const ASLHomePage({super.key, required this.title});
+  const ASLSplashScreen({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) => Container(
+        // Widget that places the app's logo as the background
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'images/ASLearning-logos.jpeg',
+              'assets/images/ASLearning-logos.jpeg',
             ),
             fit: BoxFit.cover,
           ),
         ),
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          //const SizedBox(height: 400),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: SafeArea(
+                // Styling of Button that takes the user to the main menu
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateColor.resolveWith(
@@ -59,7 +61,6 @@ class ASLHomePage extends StatelessWidget {
                           const TextStyle(fontSize: 18)),
                       minimumSize:
                           MaterialStateProperty.all(const Size(280, 65))),
-
                   child: const Text('START NOW!',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   onPressed: () {
@@ -69,14 +70,10 @@ class ASLHomePage extends StatelessWidget {
                           builder: (context) => const ASLDashboard()),
                     );
                   },
-                  // on press go to new page or something
                 ),
               ),
             ),
           ),
-          //const SizedBox(height: 50),
         ]),
       );
 }
-
-// can probably remove all of this, it is all on quiz1.dart
