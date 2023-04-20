@@ -1,38 +1,41 @@
-import 'dart:isolate';
-
-import 'package:ASL/Learn/tflite/classifier.dart';
-import 'package:ASL/Learn/tflite/recognition.dart';
-import 'package:ASL/Learn/ui/camera/camera_view_singleton.dart';
-import 'package:ASL/Learn/utils/isolate_utils.dart';
+import 'package:ASL/Learn/classifier/classifier.dart';
+import 'package:ASL/Learn/utils/image_utils.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as img;
+
+const _labelsFileName = 'assets/70.txt';
+const _modelFileName = '70.tflite';
 
 /// [CameraView] sends each frame for inference
 class CameraView extends StatefulWidget {
-  /// Callback to pass results after inference to [HomeView]
-  final Function(List<Recognition> recognitions) resultsCallback;
 
   /// Constructor
-  const CameraView(this.resultsCallback, {super.key});
+  const CameraView({super.key});
   @override
   _CameraViewState createState() => _CameraViewState();
+}
+
+enum _ResultStatus {
+  notStarted,
+  notFound,
+  found,
 }
 
 class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   /// List of available cameras
   List<CameraDescription>? cameras;
-
   /// Controller
   CameraController? cameraController;
-
   /// true when inference is ongoing
   bool predicting = true;
 
-  /// Instance of [Classifier]
-  Classifier? classifier;
+  // Result
+  _ResultStatus _resultStatus = _ResultStatus.notStarted;
+  String _plantLabel = ''; // Name of Error Message
+  double _accuracy = 0.0;
 
-  /// Instance of [IsolateUtils]
-  IsolateUtils? isolateUtils;
+  late Classifier _classifier;
 
   @override
   void initState() {
@@ -41,20 +44,23 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   }
 
   void initStateAsync() async {
-    WidgetsBinding.instance.addObserver(this);
-
-    // Spawn a new isolate
-    isolateUtils = IsolateUtils();
-    await isolateUtils?.start();
-
     // Camera initialization
     initializeCamera();
+    _loadClassifier();
+  }
 
-    // Create an instance of classifier to load model and labels
-    classifier = Classifier();
+  Future<void> _loadClassifier() async {
+    debugPrint(
+      'Start loading of Classifier with '
+      'labels at $_labelsFileName, '
+      'model at $_modelFileName',
+    );
 
-    // Initially predicting = false
-    predicting = false;
+    final classifier = await Classifier.loadWith(
+      labelsFileName: _labelsFileName,
+      modelFileName: _modelFileName,
+    );
+    _classifier = classifier!;
   }
 
   /// Initializes the camera by setting [cameraController]
@@ -65,24 +71,10 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     cameraController =
         CameraController(cameras![1], ResolutionPreset.low, imageFormatGroup: ImageFormatGroup.bgra8888, enableAudio: false);
         
-
     cameraController?.initialize().then((_) async {
+      print("Here");
       // Stream of image passed to [onLatestImageAvailable] callback
       await cameraController?.startImageStream(onLatestImageAvailable);
-
-      /// previewSize is size of each image frame captured by controller
-      ///
-      /// 352x288 on iOS, 240p (320x240) on Android with ResolutionPreset.low
-      Size? previewSize = cameraController?.value.previewSize;
-
-      /// previewSize is size of raw input image to the model
-      CameraViewSingleton.inputImageSize = previewSize;
-
-      // the display width of image on screen is
-      // same as screenWidth while maintaining the aspectRatio
-      Size screenSize = MediaQuery.of(context).size;
-      CameraViewSingleton.screenSize = screenSize;
-      CameraViewSingleton.ratio = screenSize.width / previewSize!.height;
     });
   }
 
@@ -94,36 +86,24 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     }
 
     return CameraPreview(cameraController!);
-    // return AspectRatio(
-    //     aspectRatio: cameraController!.value.aspectRatio,
-    //     child: CameraPreview(cameraController!));
   }
 
   /// Callback to receive each frame [CameraImage] perform inference on it
   onLatestImageAvailable(CameraImage cameraImage) async {
-    if (classifier?.interpreter != null && classifier?.labels != null) {
+    if (true) {
+            debugPrint("He");
+
       // If previous inference has not completed then return
       if (predicting) {
         return;
       }
+      debugPrint("Here");
 
       setState(() {
         predicting = true;
       });
-
-      // Data to be passed to inference isolate
-      var isolateData = IsolateData(
-          cameraImage, classifier!.interpreter!.address, classifier!.labels!);
-
-      // We could have simply used the compute method as well however
-      // it would be as in-efficient as we need to continuously passing data
-      // to another isolate.
-
-      /// perform inference in separate isolate
-      Map<String, dynamic> inferenceResults = await inference(isolateData);
-
-      // pass results to HomeView
-      widget.resultsCallback(inferenceResults["recognitions"]);
+      
+      _analyzeImage(cameraImage);
 
       // set predicting to false to allow new frames
       setState(() {
@@ -132,13 +112,50 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     }
   }
 
-  /// Runs inference in another isolate
-  Future<Map<String, dynamic>> inference(IsolateData isolateData) async {
-    ReceivePort responsePort = ReceivePort();
-    isolateUtils?.sendPort
-        .send(isolateData..responsePort = responsePort.sendPort);
-    var results = await responsePort.first;
-    return results;
+  void _analyzeImage(CameraImage cameraImage) {
+
+    img.Image? image = ImageUtils.convertCameraImage(cameraImage);
+    
+    final resultCategory = _classifier.predict(image!);
+
+    final result = resultCategory.score >= 0.8
+        ? _ResultStatus.found
+        : _ResultStatus.notFound;
+    final plantLabel = resultCategory.label;
+    final accuracy = resultCategory.score;
+
+
+    setState(() {
+      _resultStatus = result;
+      _plantLabel = plantLabel;
+      _accuracy = accuracy;
+    });
+  }
+
+  Widget _buildResultView() {
+    var title = '';
+
+    if (_resultStatus == _ResultStatus.notFound) {
+      title = 'Fail to recognise';
+    } else if (_resultStatus == _ResultStatus.found) {
+      title = _plantLabel;
+    } else {
+      title = '';
+    }
+
+    //
+    var accuracyLabel = '';
+    if (_resultStatus == _ResultStatus.found) {
+      accuracyLabel = 'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%';
+    }
+
+    return Column(
+      children: [
+        Text(title),
+        const SizedBox(height: 10),
+        Text(accuracyLabel)
+      ],
+    );
   }
 
   @override
@@ -158,7 +175,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     cameraController?.dispose();
     super.dispose();
   }

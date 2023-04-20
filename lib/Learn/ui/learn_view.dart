@@ -1,5 +1,3 @@
-import 'package:ASL/Learn/tflite/recognition.dart';
-import 'package:ASL/Learn/ui/camera/box_widget.dart';
 import 'package:ASL/Learn/ui/camera/camera_view.dart';
 import 'package:ASL/Learn/ui/progress_bar.dart';
 import 'package:ASL/Learn/ui/result_page.dart';
@@ -50,9 +48,6 @@ class _LearnViewState extends State<LearnView> {
     currentQuestion++;
   }
 
-  /// Results to draw bounding boxes
-  List<Recognition>? results;
-
   /// Scaffold Key
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
@@ -70,19 +65,13 @@ class _LearnViewState extends State<LearnView> {
                 margin: const EdgeInsets.all(30.0),
                 width: 283,
                 height: 352,
-                // decoration: BoxDecoration(
-                //   border: Border.all(width: 7, color: kSecondaryColor),
-                // ),
                 child: Scaffold(
                     key: scaffoldKey,
                     backgroundColor: Colors.black,
                     body: Stack(
-                      children: <Widget>[
+                      children: const <Widget>[
                         // Camera View
-                        CameraView(resultsCallback),
-
-                        // Bounding boxes
-                        boundingBoxes(results),
+                        CameraView(),
                       ],
                     ),
                   ),
@@ -190,26 +179,5 @@ class _LearnViewState extends State<LearnView> {
         ),
       ),
     );
-  }
-  
-  /// Returns Stack of bounding boxes
-  Widget boundingBoxes(List<Recognition>? results) {
-    if (results == null) {
-      return Container();
-    }
-    return Stack(
-      children: results
-          .map((e) => BoxWidget(
-                result: e,
-              ))
-          .toList(),
-    );
-  }
-
-  /// Callback to get inference results from [CameraView]
-  void resultsCallback(List<Recognition> results) {
-    setState(() {
-      this.results = results;
-    });
   }
 }
