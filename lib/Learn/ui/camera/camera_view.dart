@@ -4,8 +4,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 
-const _labelsFileName = 'assets/70.txt';
-const _modelFileName = '70.tflite';
+const _labelsFileName = 'assets/sayan.txt';
+const _modelFileName = 'sayan.tflite';
 
 /// [CameraView] sends each frame for inference
 class CameraView extends StatefulWidget {
@@ -102,7 +102,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       if (predicting) {
         return;
       }
-      debugPrint("1");
 
       setState(() {
         predicting = true;
@@ -118,18 +117,13 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   }
 
   void _analyzeImage(CameraImage cameraImage) {
-    debugPrint("2");
     img.Image? image = ImageUtils.convertCameraImage(cameraImage);
-    debugPrint("3");
     final resultCategory = _classifier.predict(image!);
-    debugPrint("4");
-    final result = resultCategory.score >= 0.8
+    final result = resultCategory.score >= 0.0
         ? _ResultStatus.found
         : _ResultStatus.notFound;
     final plantLabel = resultCategory.label;
     final accuracy = resultCategory.score;
-
-    debugPrint("5");
 
     setState(() {
       _resultStatus = result;
@@ -155,7 +149,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       accuracyLabel = 'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%';
     }
 
-    return Column(
+    return Row(
       children: [
         Text(title),
         const SizedBox(height: 10),
