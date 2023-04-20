@@ -103,9 +103,9 @@ class Classifier {
     return labels;
   }
 
-  // void close() {
-  //   _model.interpreter.close();
-  // }
+  void close() {
+    _model.interpreter.close();
+  }
 
   ClassifierCategory predict(Image image) {
     debugPrint(

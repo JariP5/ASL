@@ -28,7 +28,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   /// Controller
   CameraController? cameraController;
   /// true when inference is ongoing
-  bool predicting = true;
+  bool predicting = false;
 
   // Result
   _ResultStatus _resultStatus = _ResultStatus.notStarted;
@@ -72,7 +72,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
         CameraController(cameras![1], ResolutionPreset.low, imageFormatGroup: ImageFormatGroup.bgra8888, enableAudio: false);
         
     cameraController?.initialize().then((_) async {
-      print("Here");
+      debugPrint("0");
       // Stream of image passed to [onLatestImageAvailable] callback
       await cameraController?.startImageStream(onLatestImageAvailable);
     });
@@ -85,19 +85,24 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       return Container();
     }
 
-    return CameraPreview(cameraController!);
+    return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CameraPreview(cameraController!),
+            _buildResultView()
+          ]
+    );
   }
 
   /// Callback to receive each frame [CameraImage] perform inference on it
   onLatestImageAvailable(CameraImage cameraImage) async {
     if (true) {
-            debugPrint("He");
-
+      // debugPrint(predicting.toString());
       // If previous inference has not completed then return
       if (predicting) {
         return;
       }
-      debugPrint("Here");
+      debugPrint("1");
 
       setState(() {
         predicting = true;
@@ -113,17 +118,18 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   }
 
   void _analyzeImage(CameraImage cameraImage) {
-
+    debugPrint("2");
     img.Image? image = ImageUtils.convertCameraImage(cameraImage);
-    
+    debugPrint("3");
     final resultCategory = _classifier.predict(image!);
-
+    debugPrint("4");
     final result = resultCategory.score >= 0.8
         ? _ResultStatus.found
         : _ResultStatus.notFound;
     final plantLabel = resultCategory.label;
     final accuracy = resultCategory.score;
 
+    debugPrint("5");
 
     setState(() {
       _resultStatus = result;
