@@ -134,7 +134,7 @@ class Classifier {
 
     // Post Process the outputBuffer
     final resultCategories = _postProcessOutput(outputBuffer);
-    final topResult = resultCategories.first;
+    final topResult = resultCategories[3];
 
     debugPrint('Top category: $topResult');
 
@@ -154,7 +154,7 @@ class Classifier {
       categoryList.add(category);
       debugPrint('label: ${category.label}, score: ${category.score}');
     });
-    categoryList.sort((a, b) => (b.score > a.score ? 1 : -1));
+    // categoryList.sort((a, b) => (b.score > a.score ? 1 : -1));
 
     return categoryList;
   }

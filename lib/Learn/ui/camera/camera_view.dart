@@ -32,7 +32,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   // Result
   _ResultStatus _resultStatus = _ResultStatus.notStarted;
-  String _plantLabel = ''; // Name of Error Message
+  String _signLabel = ''; // Name of Error Message
   double _accuracy = 0.0;
 
   late Classifier _classifier;
@@ -72,7 +72,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
         CameraController(cameras![1], ResolutionPreset.low, imageFormatGroup: ImageFormatGroup.bgra8888, enableAudio: false);
         
     cameraController?.initialize().then((_) async {
-      debugPrint("0");
       // Stream of image passed to [onLatestImageAvailable] callback
       await cameraController?.startImageStream(onLatestImageAvailable);
     });
@@ -96,24 +95,21 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
   /// Callback to receive each frame [CameraImage] perform inference on it
   onLatestImageAvailable(CameraImage cameraImage) async {
-    if (true) {
-      // debugPrint(predicting.toString());
-      // If previous inference has not completed then return
-      if (predicting) {
-        return;
-      }
-
-      setState(() {
-        predicting = true;
-      });
-      
-      _analyzeImage(cameraImage);
-
-      // set predicting to false to allow new frames
-      setState(() {
-        predicting = false;
-      });
+    // If previous inference has not completed then return
+    if (predicting) {
+      return;
     }
+
+    setState(() {
+      predicting = true;
+    });
+    
+    _analyzeImage(cameraImage);
+
+    // set predicting to false to allow new frames
+    setState(() {
+      predicting = false;
+    });
   }
 
   void _analyzeImage(CameraImage cameraImage) {
@@ -127,7 +123,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
 
     setState(() {
       _resultStatus = result;
-      _plantLabel = plantLabel;
+      _signLabel = plantLabel;
       _accuracy = accuracy;
     });
   }
@@ -138,12 +134,11 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     if (_resultStatus == _ResultStatus.notFound) {
       title = 'Fail to recognise';
     } else if (_resultStatus == _ResultStatus.found) {
-      title = _plantLabel;
+      title = _signLabel;
     } else {
       title = '';
     }
 
-    //
     var accuracyLabel = '';
     if (_resultStatus == _ResultStatus.found) {
       accuracyLabel = 'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%';
@@ -152,7 +147,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     return Row(
       children: [
         Text(title),
-        const SizedBox(height: 10),
+        const SizedBox(width: 10),
         Text(accuracyLabel)
       ],
     );
