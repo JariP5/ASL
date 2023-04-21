@@ -20,15 +20,11 @@ class ImageUtils {
     int height = cameraImage.planes[0].height!;
     Uint8List bgraData = cameraImage.planes[0].bytes;
     Uint8List grayData = bgraToGrayscale(bgraData, width, height);
-    imageLib.Image img = imageLib.Image.fromBytes(
-      width,
-      height, 
-      grayData,
-      format: imageLib.Format.rgb
-    );
-    print(img.channels);
-    print(img.getBytes().length);
-    print(grayData.length);
+    imageLib.Image img = imageLib.Image.fromBytes(width, height, grayData,
+        format: imageLib.Format.rgb);
+    //print(img.channels);
+    //print(img.getBytes().length);
+    //print(grayData.length);
     return img;
   }
 

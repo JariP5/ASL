@@ -57,7 +57,7 @@ class Classifier {
       final model = await _loadModel(modelFileName);
       return Classifier._(labels: labels, model: model);
     } catch (e) {
-      debugPrint('Can\'t initialize Classifier: ${e.toString()}');
+      //debugPrint('Can\'t initialize Classifier: ${e.toString()}');
       if (e is Error) {
         debugPrintStack(stackTrace: e.stackTrace);
       }
@@ -72,15 +72,15 @@ class Classifier {
     final inputShape = interpreter.getInputTensor(0).shape;
     final outputShape = interpreter.getOutputTensor(0).shape;
 
-    debugPrint('Input shape: $inputShape');
-    debugPrint('Output shape: $outputShape');
+    //debugPrint('Input shape: $inputShape');
+    //debugPrint('Output shape: $outputShape');
 
     // Get input and output type from the model
     final inputType = interpreter.getInputTensor(0).type;
     final outputType = interpreter.getOutputTensor(0).type;
 
-    debugPrint('Input type: $inputType');
-    debugPrint('Output type: $outputType');
+    //debugPrint('Input type: $inputType');
+    //debugPrint('Output type: $outputType');
 
     return ClassifierModel(
       interpreter: interpreter,
@@ -99,7 +99,7 @@ class Classifier {
         .map((label) => label.substring(label.indexOf(' ')).trim())
         .toList();
 
-    debugPrint('Labels: $labels');
+    //debugPrint('Labels: $labels');
     return labels;
   }
 
@@ -108,18 +108,18 @@ class Classifier {
   }
 
   ClassifierCategory predict(Image image) {
-    debugPrint(
-      'Image: ${image.width}x${image.height}, '
-      'size: ${image.length} bytes',
-    );
+    // debugPrint(
+    //   'Image: ${image.width}x${image.height}, '
+    //   'size: ${image.length} bytes',
+    // );
 
     // Load the image and convert it to TensorImage for TensorFlow Input
     final inputImage = _preProcessInput(image);
 
-    debugPrint(
-      'Pre-processed image: ${inputImage.width}x${image.height}, '
-      'size: ${inputImage.buffer.lengthInBytes} bytes',
-    );
+    // debugPrint(
+    //   'Pre-processed image: ${inputImage.width}x${image.height}, '
+    //   'size: ${inputImage.buffer.lengthInBytes} bytes',
+    // );
 
     // Define the output buffer
     final outputBuffer = TensorBuffer.createFixedSize(
@@ -130,13 +130,13 @@ class Classifier {
     // Run inference
     _model.interpreter.run(inputImage.buffer, outputBuffer.buffer);
 
-    debugPrint('OutputBuffer: ${outputBuffer.getDoubleList()}');
+    //debugPrint('OutputBuffer: ${outputBuffer.getDoubleList()}');
 
     // Post Process the outputBuffer
     final resultCategories = _postProcessOutput(outputBuffer);
-    final topResult = resultCategories[3];
+    final topResult = resultCategories[0];
 
-    debugPrint('Top category: $topResult');
+    //debugPrint('Top category: $topResult');
 
     return topResult;
   }
@@ -152,7 +152,7 @@ class Classifier {
     labelledResult.getMapWithFloatValue().forEach((key, value) {
       final category = ClassifierCategory(key, value);
       categoryList.add(category);
-      debugPrint('label: ${category.label}, score: ${category.score}');
+      //debugPrint('label: ${category.label}, score: ${category.score}');
     });
     // categoryList.sort((a, b) => (b.score > a.score ? 1 : -1));
 

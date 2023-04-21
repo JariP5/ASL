@@ -54,28 +54,21 @@ class _LearnScreenState extends State<LearnScreen> {
   // Returns the square borded camera preview
   SizedBox buildCameraPreview(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 2,
-      width: MediaQuery.of(context).size.width,
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-              child: Container(
-                margin: const EdgeInsets.all(30.0),
-                width: 283,
-                height: 352,
-                child: Scaffold(
-                    key: scaffoldKey,
-                    backgroundColor: Colors.black,
-                    body: Stack(
-                      children: const <Widget>[
-                        // Camera View
-                        CameraView(),
-                      ],
-                    ),
-                  ),
+        height: MediaQuery.of(context).size.height / 2,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ClipRRect(
+                //borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: Container(
+                  margin: const EdgeInsets.all(30.0),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 6, color: kPrimaryColor)),
+                  child: CameraView(),
                 ),
               ),
             ),
@@ -158,31 +151,31 @@ class _LearnScreenState extends State<LearnScreen> {
               ),
             ),
             buildCameraPreview(context),
-            Center(
-              child: GestureDetector(
-                // Next Question Button
-                onTap: () {
-                  if (currentQuestion >= questions.length - 1) {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ResultsPage()));
-                  } else {
-                    setState(() {
-                      _nextQuestion();
-                    });
-                  }
-                },
-                child: const Text(
-                  "Next",
-                  style: TextStyle(
-                      color: kPrimaryColor,
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17),
-                ),
-              ),
-            )
+            // Center(
+            //   child: GestureDetector(
+            //     // Next Question Button
+            //     onTap: () {
+            //       if (currentQuestion >= questions.length - 1) {
+            //         Navigator.pushReplacement(
+            //             context,
+            //             MaterialPageRoute(
+            //                 builder: (context) => const ResultsPage()));
+            //       } else {
+            //         setState(() {
+            //           _nextQuestion();
+            //         });
+            //       }
+            //     },
+            //     child: const Text(
+            //       "Next",
+            //       style: TextStyle(
+            //           color: kPrimaryColor,
+            //           decoration: TextDecoration.underline,
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 17),
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:ASL/Learn/classifier/classifier.dart';
 import 'package:ASL/Learn/utils/image_utils.dart';
+import 'package:ASL/Style/colors.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
@@ -9,7 +10,6 @@ const _modelFileName = 'sayan.tflite';
 
 /// [CameraView] sends each frame for inference
 class CameraView extends StatefulWidget {
-
   /// Constructor
   const CameraView({super.key});
   @override
@@ -25,8 +25,10 @@ enum _ResultStatus {
 class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   /// List of available cameras
   List<CameraDescription>? cameras;
+
   /// Controller
   CameraController? cameraController;
+
   /// true when inference is ongoing
   bool predicting = false;
 
@@ -50,11 +52,11 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   }
 
   Future<void> _loadClassifier() async {
-    debugPrint(
-      'Start loading of Classifier with '
-      'labels at $_labelsFileName, '
-      'model at $_modelFileName',
-    );
+    // debugPrint(
+    //   'Start loading of Classifier with '
+    //   'labels at $_labelsFileName, '
+    //   'model at $_modelFileName',
+    // );
 
     final classifier = await Classifier.loadWith(
       labelsFileName: _labelsFileName,
@@ -68,9 +70,9 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     cameras = await availableCameras();
 
     // cameras[0] for rear-camera
-    cameraController =
-        CameraController(cameras![1], ResolutionPreset.low, imageFormatGroup: ImageFormatGroup.bgra8888, enableAudio: false);
-        
+    cameraController = CameraController(cameras![1], ResolutionPreset.low,
+        imageFormatGroup: ImageFormatGroup.bgra8888, enableAudio: false);
+
     cameraController?.initialize().then((_) async {
       // Stream of image passed to [onLatestImageAvailable] callback
       await cameraController?.startImageStream(onLatestImageAvailable);
@@ -84,13 +86,10 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       return Container();
     }
 
-    return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CameraPreview(cameraController!),
-            _buildResultView()
-          ]
-    );
+    return CameraPreview(cameraController!);
+    // return Stack(
+    //     //crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [CameraPreview(cameraController!), _buildResultView()]);
   }
 
   /// Callback to receive each frame [CameraImage] perform inference on it
@@ -103,7 +102,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     setState(() {
       predicting = true;
     });
-    
+
     _analyzeImage(cameraImage);
 
     // set predicting to false to allow new frames
@@ -144,13 +143,24 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       accuracyLabel = 'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%';
     }
 
-    return Row(
-      children: [
-        Text(title),
-        const SizedBox(width: 10),
-        Text(accuracyLabel)
-      ],
-    );
+    return Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+            width: 80,
+            height: 80,
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle, color: kPrimaryColor),
+            child: CircleAvatar(
+                backgroundColor: kPrimaryColor,
+                child: Text(
+                  title + " " + accuracyLabel.toUpperCase(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: kSecondaryColor),
+                )))
+        //child: Row(
+        //children: [Text(title.toUpperCase() + " "), Text(accuracyLabel)],
+        //),
+        );
   }
 
   @override
