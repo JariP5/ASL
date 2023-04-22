@@ -9,7 +9,7 @@ const _modelFileName = 'sayan.tflite';
 
 /// [CameraView] sends each frame for inference
 class CameraView extends StatefulWidget {
-  /// Callback to pass results after inference to [LearnScreen]
+  /// Callback to pass results after inference to [LearnView]
   final Function(double results, String letter) resultsCallback;
   final int letterValue;
   /// Constructor

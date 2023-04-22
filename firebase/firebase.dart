@@ -26,7 +26,6 @@ void firebase() async {
       // The CustomModel object contains the local path of the model file,
       // which you can use to instantiate a TensorFlow Lite interpreter.
       final localModelPath = customModel.file;
-      print('Downloaded');
 
       // ...
     });

@@ -1,4 +1,4 @@
-import 'package:ASL/Dictionary/dictionary_view.dart';
+import 'package:ASL/Dashboard/dashboard_view.dart';
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +67,7 @@ class ASLSplashView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DictionaryView()),
+                          builder: (context) => const DashboardView()),
                     );
                   },
                 ),

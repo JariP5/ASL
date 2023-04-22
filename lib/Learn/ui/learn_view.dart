@@ -1,5 +1,5 @@
 import 'package:ASL/Learn/ui/accuracy_meter.dart';
-import 'package:ASL/Learn/ui/camera/camera_view.dart';
+import 'package:ASL/Learn/ui/camera_view.dart';
 import 'package:ASL/Learn/ui/progress_bar.dart';
 import 'package:ASL/Learn/ui/result_page.dart';
 import 'package:ASL/Style/colors.dart';
@@ -68,11 +68,9 @@ class _LearnScreenState extends State<LearnView> {
             Align(
               alignment: Alignment.bottomCenter,
               child: ClipRRect(
-                //borderRadius: const BorderRadius.all(Radius.circular(20)),
                 child: Container(
                   margin: const EdgeInsets.only(
                       top: 20.0, right: 30.0, left: 30.0, bottom: 30.0),
-                  //margin: EdgeInsets.all(30.0),
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
@@ -143,7 +141,6 @@ class _LearnScreenState extends State<LearnView> {
                 ],
               ),
             ),
-            //const SizedBox(height: 20.0),
             Center(
               child: Column(
                 children: [
@@ -200,11 +197,12 @@ class _LearnScreenState extends State<LearnView> {
 
   /// Callback to get inference results from [CameraView]
   void resultsCallback(double results, String letter) {
-    setState(() {
-      this.results = results;
-      this.letter = letter;
-    });
-    debugPrint(letter);
+    if (mounted) {
+      setState(() {
+        this.results = results;
+        this.letter = letter;
+      });
+    }
   }
 }
 
