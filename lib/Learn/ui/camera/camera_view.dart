@@ -10,8 +10,10 @@ const _modelFileName = 'sayan.tflite';
 
 /// [CameraView] sends each frame for inference
 class CameraView extends StatefulWidget {
+  /// Callback to pass results after inference to [HomeView]
+  final Function(double results) resultsCallback;
   /// Constructor
-  const CameraView({super.key});
+  const CameraView(this.resultsCallback, {super.key});
   @override
   _CameraViewState createState() => _CameraViewState();
 }
@@ -117,14 +119,17 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     final result = resultCategory.score >= 0.0
         ? _ResultStatus.found
         : _ResultStatus.notFound;
-    final plantLabel = resultCategory.label;
+    final signLabel = resultCategory.label;
     final accuracy = resultCategory.score;
 
     setState(() {
       _resultStatus = result;
-      _signLabel = plantLabel;
+      _signLabel = signLabel;
       _accuracy = accuracy;
     });
+
+    // pass results to Learn Screen
+    widget.resultsCallback(_accuracy);
   }
 
   Widget _buildResultView() {

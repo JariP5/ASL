@@ -1,7 +1,5 @@
 import 'package:ASL/Learn/ui/camera/camera_view.dart';
 import 'package:ASL/Learn/ui/progress_bar.dart';
-import 'package:ASL/Learn/ui/result_page.dart';
-import 'package:ASL/Quiz/quiz.dart';
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +13,7 @@ class LearnScreen extends StatefulWidget {
 }
 
 class _LearnScreenState extends State<LearnScreen> {
+  double results = 0.0;
   int currentQuestion = 0;
   List<String> imagePaths = [
     'assets/images/a.png',
@@ -68,7 +67,7 @@ class _LearnScreenState extends State<LearnScreen> {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                       border: Border.all(width: 6, color: kPrimaryColor)),
-                  child: CameraView(),
+                  child: CameraView(resultsCallback),
                 ),
               ),
             ),
@@ -180,5 +179,12 @@ class _LearnScreenState extends State<LearnScreen> {
         ),
       ),
     );
+  }
+
+  /// Callback to get inference results from [CameraView]
+  void resultsCallback(double results) {
+    setState(() {
+      this.results = results;
+    });
   }
 }
