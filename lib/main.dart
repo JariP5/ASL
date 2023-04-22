@@ -39,7 +39,7 @@ class ASLSplashView extends StatelessWidget {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/ASLearning-logos.jpeg',
+              'assets/images/ASLearning-logo.jpeg',
             ),
             fit: BoxFit.cover,
           ),
