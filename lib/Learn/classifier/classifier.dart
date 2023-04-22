@@ -18,14 +18,6 @@
 // copying, modification, merger, publication, distribution, sublicensing,
 // creation of derivative works, or sale is expressly withheld.
 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -57,7 +49,7 @@ class Classifier {
       final model = await _loadModel(modelFileName);
       return Classifier._(labels: labels, model: model);
     } catch (e) {
-      //debugPrint('Can\'t initialize Classifier: ${e.toString()}');
+      debugPrint('Can\'t initialize Classifier: ${e.toString()}');
       if (e is Error) {
         debugPrintStack(stackTrace: e.stackTrace);
       }
@@ -66,21 +58,21 @@ class Classifier {
   }
 
   static Future<ClassifierModel> _loadModel(String modelFileName) async {
+
+    // model from assets
     final interpreter = await Interpreter.fromAsset(modelFileName);
+
+    // Model downloaded from firebase
+    // final modelPathFirebase = await FirebaseInit.downloadModel();
+    // final interpreterFirebase = Interpreter.fromFile(File(modelPathFirebase));
 
     // Get input and output shape from the model
     final inputShape = interpreter.getInputTensor(0).shape;
     final outputShape = interpreter.getOutputTensor(0).shape;
 
-    //debugPrint('Input shape: $inputShape');
-    //debugPrint('Output shape: $outputShape');
-
     // Get input and output type from the model
     final inputType = interpreter.getInputTensor(0).type;
     final outputType = interpreter.getOutputTensor(0).type;
-
-    //debugPrint('Input type: $inputType');
-    //debugPrint('Output type: $outputType');
 
     return ClassifierModel(
       interpreter: interpreter,
@@ -99,7 +91,6 @@ class Classifier {
         .map((label) => label.substring(label.indexOf(' ')).trim())
         .toList();
 
-    //debugPrint('Labels: $labels');
     return labels;
   }
 
@@ -108,18 +99,8 @@ class Classifier {
   }
 
   ClassifierCategory predict(Image image, int letter) {
-    // debugPrint(
-    //   'Image: ${image.width}x${image.height}, '
-    //   'size: ${image.length} bytes',
-    // );
-
     // Load the image and convert it to TensorImage for TensorFlow Input
     final inputImage = _preProcessInput(image);
-
-    // debugPrint(
-    //   'Pre-processed image: ${inputImage.width}x${image.height}, '
-    //   'size: ${inputImage.buffer.lengthInBytes} bytes',
-    // );
 
     // Define the output buffer
     final outputBuffer = TensorBuffer.createFixedSize(
@@ -130,13 +111,9 @@ class Classifier {
     // Run inference
     _model.interpreter.run(inputImage.buffer, outputBuffer.buffer);
 
-    //debugPrint('OutputBuffer: ${outputBuffer.getDoubleList()}');
-
     // Post Process the outputBuffer
     final resultCategories = _postProcessOutput(outputBuffer);
     final topResult = resultCategories[letter];
-
-    //debugPrint('Top category: $topResult');
 
     return topResult;
   }
@@ -152,9 +129,7 @@ class Classifier {
     labelledResult.getMapWithFloatValue().forEach((key, value) {
       final category = ClassifierCategory(key, value);
       categoryList.add(category);
-      //debugPrint('label: ${category.label}, score: ${category.score}');
     });
-    // categoryList.sort((a, b) => (b.score > a.score ? 1 : -1));
 
     return categoryList;
   }

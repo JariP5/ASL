@@ -4,8 +4,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 
-const _labelsFileName = 'assets/sayan.txt';
-const _modelFileName = 'sayan.tflite';
+const _labelsFileName = 'assets/labels.txt';
+const _modelFileName = 'model.tflite';
 
 /// [CameraView] sends each frame for inference
 class CameraView extends StatefulWidget {
