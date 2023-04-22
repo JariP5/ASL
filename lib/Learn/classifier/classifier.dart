@@ -107,7 +107,7 @@ class Classifier {
     _model.interpreter.close();
   }
 
-  ClassifierCategory predict(Image image) {
+  ClassifierCategory predict(Image image, int letter) {
     // debugPrint(
     //   'Image: ${image.width}x${image.height}, '
     //   'size: ${image.length} bytes',
@@ -134,7 +134,7 @@ class Classifier {
 
     // Post Process the outputBuffer
     final resultCategories = _postProcessOutput(outputBuffer);
-    final topResult = resultCategories[0];
+    final topResult = resultCategories[letter];
 
     //debugPrint('Top category: $topResult');
 

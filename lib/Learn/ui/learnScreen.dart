@@ -51,7 +51,7 @@ class _LearnScreenState extends State<LearnScreen> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   // Returns the square borded camera preview
-  SizedBox buildCameraPreview(BuildContext context) {
+  SizedBox buildCameraPreview(BuildContext context, int letter) {
     return SizedBox(
         height: MediaQuery.of(context).size.height / 2,
         width: MediaQuery.of(context).size.width,
@@ -67,7 +67,7 @@ class _LearnScreenState extends State<LearnScreen> {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                       border: Border.all(width: 6, color: kPrimaryColor)),
-                  child: CameraView(resultsCallback),
+                  child: CameraView(resultsCallback, letter),
                 ),
               ),
             ),
@@ -149,7 +149,7 @@ class _LearnScreenState extends State<LearnScreen> {
                 ],
               ),
             ),
-            buildCameraPreview(context),
+            buildCameraPreview(context, currentQuestion > 8 ? currentQuestion + 1 : currentQuestion),
             // Center(
             //   child: GestureDetector(
             //     // Next Question Button
