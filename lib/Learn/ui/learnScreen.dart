@@ -14,6 +14,7 @@ class LearnScreen extends StatefulWidget {
 
 class _LearnScreenState extends State<LearnScreen> {
   double results = 0.0;
+  String letter = 'A';
   int currentQuestion = 0;
   List<String> imagePaths = [
     'assets/images/a.png',
@@ -150,6 +151,7 @@ class _LearnScreenState extends State<LearnScreen> {
               ),
             ),
             buildCameraPreview(context, currentQuestion > 8 ? currentQuestion + 1 : currentQuestion),
+            Text(results.toString())
             // Center(
             //   child: GestureDetector(
             //     // Next Question Button
@@ -182,9 +184,10 @@ class _LearnScreenState extends State<LearnScreen> {
   }
 
   /// Callback to get inference results from [CameraView]
-  void resultsCallback(double results) {
+  void resultsCallback(double results, String letter) {
     setState(() {
       this.results = results;
+      this.letter = letter;
     });
   }
 }
