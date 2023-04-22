@@ -1,12 +1,12 @@
-import 'package:ASL/Dictionary/dictScreen.dart';
-import 'package:ASL/Learn/ui/learnScreen.dart';
+import 'package:ASL/Dictionary/dictionary_view.dart';
+import 'package:ASL/Learn/ui/learn_view.dart';
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../Quiz/quizScreen.dart';
+import '../Quiz/quiz_view.dart';
 
-class ASLDashboard extends StatelessWidget {
-  const ASLDashboard({super.key});
+class DashboardView extends StatelessWidget {
+  const DashboardView({super.key});
 
   // builds screen and adds buttons
   @override
@@ -16,8 +16,6 @@ class ASLDashboard extends StatelessWidget {
         // aligns buttons to the center
         alignment: Alignment.center,
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          //const SizedBox(height: 220),
-          //const Padding(padding: EdgeInsets.only(top: 5)),
           // learn button
           ElevatedButton(
             style: addButtonStyle(),
@@ -26,14 +24,9 @@ class ASLDashboard extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             onPressed: () {
-              // redirect to learn screen
-              // await availableCameras().then((value) => Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (_) => LearnView(frontCamera: value[1]))));
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LearnScreen()),
+                MaterialPageRoute(builder: (context) => const LearnView()),
               );
             },
           ),
@@ -51,7 +44,7 @@ class ASLDashboard extends StatelessWidget {
               // redirect to quiz screen
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const QuizApp()),
+                MaterialPageRoute(builder: (context) => const QuizView()),
               );
             },
           ),
@@ -69,7 +62,7 @@ class ASLDashboard extends StatelessWidget {
               // redirect to dictionary screen
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ASLDictionaryScreen()),
+                MaterialPageRoute(builder: (context) => const DictionaryView()),
               );
             },
           ),

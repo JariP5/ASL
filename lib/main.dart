@@ -1,6 +1,6 @@
+import 'package:ASL/Dictionary/dictionary_view.dart';
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/material.dart';
-import './Dashboard/dashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,7 +10,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   // This widget is the root of your application.
-  // @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false, // Remove the debug banner
@@ -22,16 +22,16 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(primary: kPrimaryColor, secondary: kSecondaryColor)),
       // A widget which will be started on application startup
-      home: const ASLSplashScreen(title: 'ASL Home Page'),
+      home: const ASLSplashView(title: 'ASL Home Page'),
     );
   }
 }
 
 // This class holds the info for the splash screen of the app and prompts
 // the user to be taken to the main menu
-class ASLSplashScreen extends StatelessWidget {
+class ASLSplashView extends StatelessWidget {
   final String title;
-  const ASLSplashScreen({super.key, required this.title});
+  const ASLSplashView({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) => Container(
@@ -67,7 +67,7 @@ class ASLSplashScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ASLDashboard()),
+                          builder: (context) => const DictionaryView()),
                     );
                   },
                 ),

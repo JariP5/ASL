@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
-class ASLDictionaryScreen extends StatefulWidget {
+class DictionaryView extends StatefulWidget {
+  const DictionaryView({super.key});
+
   // creates the screen
   @override
-  _ASLDictionaryScreenState createState() => _ASLDictionaryScreenState();
+  _DictionaryViewState createState() => _DictionaryViewState();
 }
 
 // class that that contains the search bar and the list of ASL images and their corresponding letters
-class _ASLDictionaryScreenState extends State<ASLDictionaryScreen> {
-  TextEditingController _searchController = TextEditingController();
+class _DictionaryViewState extends State<DictionaryView> {
+  final TextEditingController _searchController = TextEditingController();
   // user input
   String _searchText = '';
 
   // dictionary which assigns ASL images to their corresponding letters
+  // ignore: non_constant_identifier_names
   final Map<String, String> _Dictionary = {
     'assets/images/a.png': 'A',
     'assets/images/b.png': 'B',
@@ -60,7 +63,7 @@ class _ASLDictionaryScreenState extends State<ASLDictionaryScreen> {
         title: TextField(
           // used to get the text value entered by the user
           controller: _searchController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'Search...',
             border: InputBorder.none,
             icon: Icon(Icons.search),
@@ -88,11 +91,11 @@ class _ASLDictionaryScreenState extends State<ASLDictionaryScreen> {
     return Row(
       children: [
         Image.asset(imagePath, height: 100, width: 100),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Expanded(
           child: Text(
             text,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
         ),
       ],

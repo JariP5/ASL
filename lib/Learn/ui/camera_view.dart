@@ -1,6 +1,5 @@
 import 'package:ASL/Learn/classifier/classifier.dart';
 import 'package:ASL/Learn/utils/image_utils.dart';
-import 'package:ASL/Style/colors.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
@@ -19,12 +18,6 @@ class CameraView extends StatefulWidget {
   _CameraViewState createState() => _CameraViewState();
 }
 
-enum _ResultStatus {
-  notStarted,
-  notFound,
-  found,
-}
-
 class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   /// List of available cameras
   List<CameraDescription>? cameras;
@@ -36,8 +29,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   bool predicting = false;
 
   // Result
-  _ResultStatus _resultStatus = _ResultStatus.notStarted;
-  String _signLabel = ''; // Name of Error Message
+  String _signLabel = '';
   double _accuracy = 0.0;
 
   late Classifier _classifier;
@@ -49,18 +41,11 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   }
 
   void initStateAsync() async {
-    // Camera initialization
     initializeCamera();
     _loadClassifier();
   }
 
   Future<void> _loadClassifier() async {
-    // debugPrint(
-    //   'Start loading of Classifier with '
-    //   'labels at $_labelsFileName, '
-    //   'model at $_modelFileName',
-    // );
-
     final classifier = await Classifier.loadWith(
       labelsFileName: _labelsFileName,
       modelFileName: _modelFileName,
@@ -72,7 +57,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   void initializeCamera() async {
     cameras = await availableCameras();
 
-    // cameras[0] for rear-camera
+    // cameras[1] for front-camera
     cameraController = CameraController(cameras![1], ResolutionPreset.low,
         imageFormatGroup: ImageFormatGroup.bgra8888, enableAudio: false);
 
@@ -90,9 +75,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     }
 
     return CameraPreview(cameraController!);
-    // return Stack(
-    //     //crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [CameraPreview(cameraController!), _buildResultView()]);
   }
 
   /// Callback to receive each frame [CameraImage] perform inference on it
@@ -117,56 +99,16 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   void _analyzeImage(CameraImage cameraImage) {
     img.Image? image = ImageUtils.convertCameraImage(cameraImage);
     final resultCategory = _classifier.predict(image!, widget.letterValue);
-    final result = resultCategory.score >= 0.0
-        ? _ResultStatus.found
-        : _ResultStatus.notFound;
     final signLabel = resultCategory.label;
     final accuracy = resultCategory.score;
 
     setState(() {
-      _resultStatus = result;
       _signLabel = signLabel;
       _accuracy = accuracy;
     });
 
     // pass results to Learn Screen
     widget.resultsCallback(_accuracy, _signLabel);
-  }
-
-  Widget _buildResultView() {
-    var title = '';
-
-    if (_resultStatus == _ResultStatus.notFound) {
-      title = 'Fail to recognise';
-    } else if (_resultStatus == _ResultStatus.found) {
-      title = _signLabel;
-    } else {
-      title = '';
-    }
-
-    var accuracyLabel = '';
-    if (_resultStatus == _ResultStatus.found) {
-      accuracyLabel = 'Accuracy: ${(_accuracy * 100).toStringAsFixed(2)}%';
-    }
-
-    return Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-            width: 80,
-            height: 80,
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle, color: kPrimaryColor),
-            child: CircleAvatar(
-                backgroundColor: kPrimaryColor,
-                child: Text(
-                  title + " " + accuracyLabel.toUpperCase(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: kSecondaryColor),
-                )))
-        //child: Row(
-        //children: [Text(title.toUpperCase() + " "), Text(accuracyLabel)],
-        //),
-        );
   }
 
   @override

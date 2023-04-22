@@ -1,12 +1,13 @@
 import 'dart:math';
+
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import './quiz.dart';
 
-class QuizApp extends StatelessWidget {
-  const QuizApp({super.key});
+class QuizView extends StatelessWidget {
+  const QuizView({super.key});
 
   @override
   Widget build(BuildContext context) {

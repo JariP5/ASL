@@ -5,7 +5,7 @@ import 'package:image/image.dart' as imageLib;
 
 /// ImageUtils
 class ImageUtils {
-  /// Converts a [CameraImage] in YUV420 format to [imageLib.Image] in RGB format
+  /// Converts a [CameraImage] in given format from camera to [imageLib.Image] in RGB format
   static imageLib.Image? convertCameraImage(CameraImage cameraImage) {
     if (cameraImage.format.group == ImageFormatGroup.bgra8888) {
       return convertBGRA8888ToImage(cameraImage);
@@ -22,9 +22,7 @@ class ImageUtils {
     Uint8List grayData = bgraToGrayscale(bgraData, width, height);
     imageLib.Image img = imageLib.Image.fromBytes(width, height, grayData,
         format: imageLib.Format.rgb);
-    //print(img.channels);
-    //print(img.getBytes().length);
-    //print(grayData.length);
+
     return img;
   }
 
