@@ -1,9 +1,16 @@
 import 'package:ASL/Dashboard/dashboard_view.dart';
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
+  // Needed to initalize camera and Firebase
   WidgetsFlutterBinding.ensureInitialized();
+  // Needed to force phone orientation
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+  // Boot/Start application
   runApp(const MyApp());
 }
 
