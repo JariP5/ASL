@@ -94,23 +94,26 @@ class _LearnScreenState extends State<LearnView> {
               child: Row(
                 children: [
                   // Return to main menu
-                  IconButton(
-                    onPressed: () {
-                      // If in the first question, pop back to main menu
-                      if (currentQuestion == 0) {
-                        Navigator.pop(context);
-                      } else {
-                        // otherwise, go back a question
-                        setState(() {
-                          _previousQuestion();
-                        });
-                      }
-                    },
-                    // Set return button styling
-                    icon: const Icon(
-                      CupertinoIcons.back,
-                      size: 35,
-                      color: kPrimaryColor,
+                  Expanded(
+                    child: IconButton(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      onPressed: () {
+                        // If in the first question, pop back to main menu
+                        if (currentQuestion == 0) {
+                          Navigator.pop(context);
+                        } else {
+                          // otherwise, go back a question
+                          setState(() {
+                            _previousQuestion();
+                          });
+                        }
+                      },
+                      // Set return button styling
+                      icon: const Icon(
+                        CupertinoIcons.back,
+                        size: 35,
+                        color: kPrimaryColor,
+                      ),
                     ),
                   ),
                   // Call progress bar function
@@ -118,24 +121,27 @@ class _LearnScreenState extends State<LearnView> {
                     currentQuestion: currentQuestion,
                   ),
                   // Go to the next question
-                  IconButton(
-                    onPressed: () {
-                      if (currentQuestion >= imagePaths.length - 1) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ResultsPage()));
-                      } else {
-                        setState(() {
-                          _nextQuestion();
-                        });
-                      }
-                    },
-                    // Set "next" button styling
-                    icon: const Icon(
-                      CupertinoIcons.forward,
-                      size: 35,
-                      color: kPrimaryColor,
+                  Expanded(
+                    child: IconButton(
+                      padding: const EdgeInsets.only(bottom: 5.0),
+                      onPressed: () {
+                        if (currentQuestion >= imagePaths.length - 1) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ResultsPage()));
+                        } else {
+                          setState(() {
+                            _nextQuestion();
+                          });
+                        }
+                      },
+                      // Set "next" button styling
+                      icon: const Icon(
+                        CupertinoIcons.forward,
+                        size: 35,
+                        color: kPrimaryColor,
+                      ),
                     ),
                   ),
                 ],
