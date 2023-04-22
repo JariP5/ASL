@@ -1,3 +1,5 @@
+import 'package:ASL/Style/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DictionaryView extends StatefulWidget {
@@ -60,13 +62,21 @@ class _DictionaryViewState extends State<DictionaryView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          // used to get the text value entered by the user
-          controller: _searchController,
-          decoration: const InputDecoration(
-            hintText: 'Search...',
-            border: InputBorder.none,
-            icon: Icon(Icons.search),
+        title: Container(
+          height: 40,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.white, width: 5),
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.white),
+          child: TextField(
+            // used to get the text value entered by the user
+            controller: _searchController,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.only(bottom: 12.0),
+              hintText: 'Search...',
+              border: InputBorder.none,
+              icon: Icon(CupertinoIcons.search),
+            ),
           ),
         ),
       ),
@@ -91,11 +101,13 @@ class _DictionaryViewState extends State<DictionaryView> {
     return Row(
       children: [
         Image.asset(imagePath, height: 100, width: 100),
-        const SizedBox(width: 10),
         Expanded(
           child: Text(
-            text,
-            style: const TextStyle(fontSize: 18),
+            "- " + text,
+            style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: kSecondaryColor),
           ),
         ),
       ],

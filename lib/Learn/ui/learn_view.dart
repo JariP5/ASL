@@ -185,9 +185,10 @@ class _LearnScreenState extends State<LearnView> {
                 ],
               ),
             ),
+            // Display bordered camera preview
             buildCameraPreview(context,
                 currentQuestion > 8 ? currentQuestion + 1 : currentQuestion),
-
+            // Display how accurate the user's handsingning is through a meter
             AccuracyMeter(accuracy: results)
           ],
         ),
@@ -205,4 +206,3 @@ class _LearnScreenState extends State<LearnView> {
     }
   }
 }
-

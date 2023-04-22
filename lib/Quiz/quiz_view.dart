@@ -69,7 +69,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 30),
             Expanded(
               child: PageView.builder(
                   itemCount: questions.length,
@@ -88,17 +88,29 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     );
   }
 
-  Column buildQuestion(Question question) {
+  Widget buildQuestion(Question question) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 32),
-        Text(
-          question.text,
-          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        Center(
+          child: Text(
+            question.text,
+            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          ),
         ),
-        Image.asset(question.imagePath, height: 150, width: 150),
-        const SizedBox(height: 32),
+        const SizedBox(height: 20),
+        Center(
+            child: Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: kPrimaryColor, width: 5),
+                    borderRadius: BorderRadius.circular(25),
+                    image: DecorationImage(
+                        image: AssetImage(question.imagePath),
+                        fit: BoxFit.fill)))),
+        const SizedBox(height: 15),
         Expanded(
           child: OptionsWidget(
             question: question,
@@ -213,19 +225,21 @@ class OptionsWidget extends StatelessWidget {
       child: Container(
         height: 50,
         padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.symmetric(vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: kPrimaryColor,
           borderRadius: BorderRadius.circular(33),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(
           children: [
-            Text(
-              option.text,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Align(
+              child: Text(
+                option.text,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
-            getIconForOption(option, question),
+            Positioned(right: 0, child: getIconForOption(option, question)),
           ],
         ),
       ),
