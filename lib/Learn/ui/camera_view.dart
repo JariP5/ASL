@@ -12,6 +12,7 @@ class CameraView extends StatefulWidget {
   /// Callback to pass results after inference to [LearnView]
   final Function(double results, String letter) resultsCallback;
   final int letterValue;
+
   /// Constructor
   const CameraView(this.resultsCallback, this.letterValue, {super.key});
   @override
@@ -83,17 +84,20 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     if (predicting) {
       return;
     }
-
-    setState(() {
-      predicting = true;
-    });
+    if (mounted) {
+      setState(() {
+        predicting = true;
+      });
+    }
 
     _analyzeImage(cameraImage);
 
-    // set predicting to false to allow new frames
-    setState(() {
-      predicting = false;
-    });
+    if (mounted) {
+      // set predicting to false to allow new frames
+      setState(() {
+        predicting = false;
+      });
+    }
   }
 
   void _analyzeImage(CameraImage cameraImage) {
@@ -102,10 +106,12 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     final signLabel = resultCategory.label;
     final accuracy = resultCategory.score;
 
-    setState(() {
-      _signLabel = signLabel;
-      _accuracy = accuracy;
-    });
+    if (mounted) {
+      setState(() {
+        _signLabel = signLabel;
+        _accuracy = accuracy;
+      });
+    }
 
     // pass results to Learn Screen
     widget.resultsCallback(_accuracy, _signLabel);
