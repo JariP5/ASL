@@ -1,5 +1,6 @@
 import 'package:ASL/Learn/ui/camera/camera_view.dart';
 import 'package:ASL/Learn/ui/progress_bar.dart';
+import 'package:ASL/Learn/ui/result_page.dart';
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +44,14 @@ class _LearnScreenState extends State<LearnScreen> {
     'assets/images/y.png',
   ];
 
-// Move to the next question
+  // Move to the next question
   void _nextQuestion() {
     currentQuestion++;
+  }
+
+  // Move back to previous question
+  void _previousQuestion() {
+    currentQuestion--;
   }
 
   /// Scaffold Key
@@ -63,7 +69,9 @@ class _LearnScreenState extends State<LearnScreen> {
               child: ClipRRect(
                 //borderRadius: const BorderRadius.all(Radius.circular(20)),
                 child: Container(
-                  margin: const EdgeInsets.all(30.0),
+                  margin: const EdgeInsets.only(
+                      top: 20.0, right: 30.0, left: 30.0, bottom: 30.0),
+                  //margin: EdgeInsets.all(30.0),
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
@@ -89,7 +97,15 @@ class _LearnScreenState extends State<LearnScreen> {
                   // Return to main menu
                   IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      // If in the first question, pop back to main menu
+                      if (currentQuestion == 0) {
+                        Navigator.pop(context);
+                      } else {
+                        // otherwise, go back a question
+                        setState(() {
+                          _previousQuestion();
+                        });
+                      }
                     },
                     // Set return button styling
                     icon: const Icon(
@@ -102,10 +118,31 @@ class _LearnScreenState extends State<LearnScreen> {
                   ProgressBar(
                     currentQuestion: currentQuestion,
                   ),
+                  // Go to the next question
+                  IconButton(
+                    onPressed: () {
+                      if (currentQuestion >= imagePaths.length - 1) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ResultsPage()));
+                      } else {
+                        setState(() {
+                          _nextQuestion();
+                        });
+                      }
+                    },
+                    // Set "next" button styling
+                    icon: const Icon(
+                      CupertinoIcons.forward,
+                      size: 35,
+                      color: kPrimaryColor,
+                    ),
+                  ),
                 ],
               ),
             ),
-            const SizedBox(height: 20.0),
+            //const SizedBox(height: 20.0),
             Center(
               child: Column(
                 children: [
@@ -150,33 +187,10 @@ class _LearnScreenState extends State<LearnScreen> {
                 ],
               ),
             ),
-            buildCameraPreview(context, currentQuestion > 8 ? currentQuestion + 1 : currentQuestion),
-            Text(results.toString())
-            // Center(
-            //   child: GestureDetector(
-            //     // Next Question Button
-            //     onTap: () {
-            //       if (currentQuestion >= questions.length - 1) {
-            //         Navigator.pushReplacement(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) => const ResultsPage()));
-            //       } else {
-            //         setState(() {
-            //           _nextQuestion();
-            //         });
-            //       }
-            //     },
-            //     child: const Text(
-            //       "Next",
-            //       style: TextStyle(
-            //           color: kPrimaryColor,
-            //           decoration: TextDecoration.underline,
-            //           fontWeight: FontWeight.bold,
-            //           fontSize: 17),
-            //     ),
-            //   ),
-            // )
+            buildCameraPreview(context,
+                currentQuestion > 8 ? currentQuestion + 1 : currentQuestion),
+
+            AccuracyMeter(accuracy: results)
           ],
         ),
       ),
@@ -189,5 +203,44 @@ class _LearnScreenState extends State<LearnScreen> {
       this.results = results;
       this.letter = letter;
     });
+    debugPrint(letter);
+  }
+}
+
+class AccuracyMeter extends StatelessWidget {
+  final double accuracy;
+  final colors = [Colors.red, Colors.yellow, Colors.green];
+  final accuracyTween = TweenSequence([
+    TweenSequenceItem(
+        tween: ColorTween(begin: Colors.red, end: Colors.yellow), weight: 0.3),
+    TweenSequenceItem(
+        tween: ColorTween(begin: Colors.yellow, end: Colors.green),
+        weight: 0.5),
+    TweenSequenceItem(
+        tween: ColorTween(begin: Colors.green, end: Colors.green), weight: 0.7),
+  ]);
+  AccuracyMeter({super.key, required this.accuracy});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(90.0)),
+          width: MediaQuery.of(context).size.width / 1.3,
+          height: 20,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned.fill(
+                  child: LinearProgressIndicator(
+                value: accuracy,
+                valueColor: AlwaysStoppedAnimation(
+                    accuracyTween.evaluate(AlwaysStoppedAnimation(accuracy))),
+                backgroundColor: kSecondaryColor.withOpacity(0.5),
+              ))
+            ],
+          )),
+    );
   }
 }
