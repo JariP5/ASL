@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ASL/Learn/ui/accuracy_meter.dart';
 import 'package:ASL/Learn/ui/camera_view.dart';
 import 'package:ASL/Learn/ui/progress_bar.dart';
@@ -17,6 +19,8 @@ class LearnView extends StatefulWidget {
 class _LearnScreenState extends State<LearnView> {
   double results = 0.0;
   String letter = 'A';
+  bool correctSign = false;
+
   int currentQuestion = 0;
   List<String> imagePaths = [
     'assets/images/a.png',
@@ -57,31 +61,6 @@ class _LearnScreenState extends State<LearnView> {
 
   /// Scaffold Key
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-
-  // Returns the square borded camera preview
-  SizedBox buildCameraPreview(BuildContext context, int letter) {
-    return SizedBox(
-        height: MediaQuery.of(context).size.height / 2,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: ClipRRect(
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      top: 20.0, right: 30.0, left: 30.0, bottom: 30.0),
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 6, color: kPrimaryColor)),
-                  child: CameraView(resultsCallback, letter),
-                ),
-              ),
-            ),
-          ],
-        ));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -195,11 +174,54 @@ class _LearnScreenState extends State<LearnView> {
             buildCameraPreview(context,
                 currentQuestion > 8 ? currentQuestion + 1 : currentQuestion),
             // Display how accurate the user's handsingning is through a meter
-            AccuracyMeter(accuracy: results)
+            AccuracyMeter(correctCallback, results),
           ],
         ),
       ),
     );
+  }
+
+  // Returns the square borded camera preview
+  SizedBox buildCameraPreview(BuildContext context, int letter) {
+    return SizedBox(
+        height: MediaQuery.of(context).size.height / 2,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ClipRRect(
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      top: 20.0, right: 30.0, left: 30.0, bottom: 30.0),
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 6, color: kPrimaryColor)),
+                  // Display greyed out Camera Preview if user has previous question right,
+                  // otherwise, displays it w/ a transparent filter atop
+                  child: ColorFiltered(
+                      colorFilter: correctSign
+                          ? ColorFilter.mode(
+                              Colors.grey.withOpacity(0.5), BlendMode.srcATop)
+                          : const ColorFilter.mode(
+                              Colors.transparent, BlendMode.srcATop),
+                      child: CameraView(resultsCallback, letter)),
+                ),
+              ),
+            ),
+            correctSign
+                ? const Align(
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.check_box,
+                      size: 150,
+                      color: Colors.green,
+                    ),
+                  )
+                : Container(),
+          ],
+        ));
   }
 
   /// Callback to get inference results from [CameraView]
@@ -208,6 +230,25 @@ class _LearnScreenState extends State<LearnView> {
       setState(() {
         this.results = results;
         this.letter = letter;
+      });
+    }
+  }
+
+  /// Callback to get correctSign result from [AccuracyMeter]
+  void correctCallback(bool _correctSign) {
+    if (mounted) {
+      setState(() {
+        // Needed to display greyed out filter atop the Camera Preview
+        // false = greyed out
+        // true = clear
+        correctSign = _correctSign;
+        if (correctSign == true) {
+          // If user got the question right, it renders the greyed out
+          // Camera Preview and waits 1 sec to go to next question
+          Timer(const Duration(seconds: 1), () {
+            _nextQuestion();
+          });
+        }
       });
     }
   }
