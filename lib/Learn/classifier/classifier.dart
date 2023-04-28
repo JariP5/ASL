@@ -98,6 +98,7 @@ class Classifier {
     _model.interpreter.close();
   }
 
+  // predicts probability for input letter
   ClassifierCategory predict(Image image, int letter) {
     // Load the image and convert it to TensorImage for TensorFlow Input
     final inputImage = _preProcessInput(image);
@@ -135,22 +136,22 @@ class Classifier {
   }
 
   TensorImage _preProcessInput(Image image) {
-    // #1
+    // #1 Convert image to TensorImage
     final inputTensor = TensorImage(_model.inputType);
     inputTensor.loadImage(image);
 
-    // #2
+    // #2 resize to a square
     final minLength = min(inputTensor.height, inputTensor.width);
     final cropOp = ResizeWithCropOrPadOp(minLength, minLength);
 
-    // #3
+    // #3 resize image to fit 
     final shapeLength = _model.inputShape[1];
     final resizeOp = ResizeOp(shapeLength, shapeLength, ResizeMethod.BILINEAR);
 
-    // #4
+    // #4 normalize pixel values 
     final normalizeOp = NormalizeOp(127.5, 127.5);
 
-    // #5
+    // #5 aplly the changes
     final imageProcessor = ImageProcessorBuilder()
         .add(cropOp)
         .add(resizeOp)
