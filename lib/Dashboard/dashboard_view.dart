@@ -1,4 +1,5 @@
 import 'package:ASL/Dictionary/dictionary_view.dart';
+import 'package:ASL/Flashcards/cards_view.dart';
 import 'package:ASL/Learn/ui/learn_view.dart';
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/material.dart';
