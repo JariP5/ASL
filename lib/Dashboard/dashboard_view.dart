@@ -66,6 +66,23 @@ class DashboardView extends StatelessWidget {
               );
             },
           ),
+          const SizedBox(
+            height: 50,
+          ),
+          // dictionary screen
+          ElevatedButton(
+            style: addButtonStyle(),
+            child: const Text(
+              'FLASHCARDS',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FlashcardsView()),
+              );
+            },
+          ),
         ]),
       ));
 
