@@ -6,10 +6,12 @@ class Flashcard extends StatelessWidget {
   final String imagePath;
   final String letter;
 
+  // defining Flashcard; matching image with letter
   const Flashcard({Key? key, required this.imagePath, required this.letter})
       : super(key: key);
 
   @override
+  // basic layout of the screen
   Widget build(BuildContext context) {
     return FlipCard(
       front: Container(
@@ -26,6 +28,7 @@ class Flashcard extends StatelessWidget {
   }
 }
 
+// matching signing images with their corresponding letters
 class FlashcardsView extends StatefulWidget {
   final List<Map<String, dynamic>> flashcards = [
     {'image': ('images/a.png'), 'letter': 'A', 'showImageFirst': true},
@@ -57,15 +60,18 @@ class FlashcardsView extends StatefulWidget {
 }
 
 class _FlashcardsViewState extends State<FlashcardsView> {
+  // starts with letter a
   int _currentIndex = 0;
   bool _isFront = true;
 
+  // when card flips, turn card around
   void _flipCard() {
     setState(() {
       _isFront = !_isFront;
     });
   }
 
+  // when next card, flips car back to image
   void _nextCard() {
     setState(() {
       _isFront = true;
@@ -73,6 +79,7 @@ class _FlashcardsViewState extends State<FlashcardsView> {
     });
   }
 
+  // builds page with flashcards that will flip horizontally
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,15 +89,19 @@ class _FlashcardsViewState extends State<FlashcardsView> {
       body: Column(
         children: [
           Expanded(
+            // puts flashcard in the center of the screen
             child: Center(
+              // flips card horizontally
               child: FlipCard(
                 direction: FlipDirection.HORIZONTAL,
+                // displays image on front
                 front: Container(
                   child: Image.asset(
                     widget.flashcards[_currentIndex]['image'],
                     fit: BoxFit.cover,
                   ),
                 ),
+                // displays letter on the back
                 back: Container(
                   child: Text(
                     widget.flashcards[_currentIndex]['letter'],
@@ -101,6 +112,7 @@ class _FlashcardsViewState extends State<FlashcardsView> {
                   ),
                 ),
                 flipOnTouch: true,
+                // flips card when card is touched
                 onFlip: _flipCard,
                 onFlipDone: (_) {
                   setState(() {
@@ -110,13 +122,14 @@ class _FlashcardsViewState extends State<FlashcardsView> {
               ),
             ),
           ),
+          // next button
           Container(
             margin: EdgeInsets.only(bottom: 16.0, right: 16.0),
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
+              // proceeds to next card when button is pressed
               onPressed: _nextCard,
               shape: RoundedRectangleBorder(
-                  //borderRadius: BorderRadius.circular(10.0),
                   ),
               child: Text('Next'),
             ),
