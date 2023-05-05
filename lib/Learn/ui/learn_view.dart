@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:ASL/Learn/ui/accuracy_meter.dart';
 import 'package:ASL/Learn/ui/camera_view.dart';
-import 'package:ASL/Learn/ui/progress_bar.dart';
+import 'package:ASL/Style/progress_bar.dart';
 import 'package:ASL/Learn/ui/result_page.dart';
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -98,6 +98,7 @@ class _LearnScreenState extends State<LearnView> {
                   // Call progress bar function
                   ProgressBar(
                     currentQuestion: currentQuestion,
+                    totalQuestions: 24,
                   ),
                   // Go to the next question
                   Expanded(
