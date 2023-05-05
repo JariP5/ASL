@@ -17,7 +17,7 @@ class DashboardView extends StatelessWidget {
         // aligns buttons to the center
         alignment: Alignment.center,
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          // learn button
+          // Learn Screen
           ElevatedButton(
             style: addButtonStyle(),
             child: const Text(
@@ -34,7 +34,7 @@ class DashboardView extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          // quiz screen
+          // Quiz screen
           ElevatedButton(
             style: addButtonStyle(),
             child: const Text(
@@ -56,6 +56,23 @@ class DashboardView extends StatelessWidget {
           ElevatedButton(
             style: addButtonStyle(),
             child: const Text(
+              'FLASHCARDS',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FlashcardsView()),
+              );
+            },
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          // Dictionary screen
+          ElevatedButton(
+            style: addButtonStyle(),
+            child: const Text(
               'DICTIONARY',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -64,23 +81,6 @@ class DashboardView extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const DictionaryView()),
-              );
-            },
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          // dictionary screen
-          ElevatedButton(
-            style: addButtonStyle(),
-            child: const Text(
-              'FLASHCARDS',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FlashcardsView()),
               );
             },
           ),
