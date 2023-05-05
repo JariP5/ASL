@@ -30,6 +30,7 @@ import '../Style/colors.dart';
 //   }
 // }
 
+// matching signing images with their corresponding letters
 class FlashcardsView extends StatefulWidget {
   const FlashcardsView({super.key});
   @override
@@ -66,12 +67,14 @@ class _FlashcardsViewState extends State<FlashcardsView> {
   int _currentIndex = 0;
   bool _isFront = true;
 
+  // when card flips, turn card around
   void _flipCard() {
     setState(() {
       _isFront = !_isFront;
     });
   }
 
+  // when next card, flips car back to image
   void _nextCard() {
     setState(() {
       _isFront = true;
@@ -86,6 +89,7 @@ class _FlashcardsViewState extends State<FlashcardsView> {
     });
   }
 
+  // builds page with flashcards that will flip horizontally
   @override
   Widget build(BuildContext context) {
     return Scaffold(
