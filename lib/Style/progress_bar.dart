@@ -1,6 +1,6 @@
 // Progress bar
 import 'package:flutter/material.dart';
-import '../../Style/colors.dart';
+import 'colors.dart';
 
 class ProgressBar extends StatelessWidget {
   final int currentQuestion;
