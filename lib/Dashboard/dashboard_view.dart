@@ -62,7 +62,7 @@ class DashboardView extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FlashcardsView()),
+                MaterialPageRoute(builder: (context) => const FlashcardsView()),
               );
             },
           ),
