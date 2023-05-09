@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
-
 import 'package:ASL/Style/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
