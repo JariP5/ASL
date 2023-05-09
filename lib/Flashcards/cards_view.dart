@@ -143,13 +143,30 @@ class _FlashcardsViewState extends State<FlashcardsView> {
                 ),
               ],
             ),
+            const SizedBox(height: 25.0),
+            Column(
+              children: const [
+                Text(
+                  "Test Your Knowledge",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Tap the card to reveal the answer",
+                  style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
+                ),
+              ],
+            ),
             Expanded(
               child: Center(
                 child: Container(
                   height: 350,
-                  width: 300,
+                  width: 250,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: const Color(0x80F7BF4F),
                     border: Border.all(color: kPrimaryColor, width: 10),
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -159,7 +176,7 @@ class _FlashcardsViewState extends State<FlashcardsView> {
                       direction: FlipDirection.HORIZONTAL,
                       front: Image.asset(
                         flashcards[_currentIndex]['image'],
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fitWidth,
                       ),
                       back: Text(
                         flashcards[_currentIndex]['letter'],
