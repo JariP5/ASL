@@ -95,67 +95,59 @@ class _FlashcardsViewState extends State<FlashcardsView> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: IconButton(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      onPressed: () {
-                        // If in the first question, pop back to main menu
-                        if (_currentIndex == 0) {
-                          Navigator.pop(context);
-                        } else {
-                          // otherwise, go back a question
-                          setState(() {
-                            _previousCard();
-                          });
-                        }
-                      },
-                      // Set return button styling
-                      icon: const Icon(
-                        CupertinoIcons.back,
-                        size: 35,
-                        color: kPrimaryColor,
-                      ),
-                    ),
+            Row(
+              children: [
+                IconButton(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  onPressed: () {
+                    // If in the first question, pop back to main menu
+                    if (_currentIndex == 0) {
+                      Navigator.pop(context);
+                    } else {
+                      // otherwise, go back a question
+                      setState(() {
+                        _previousCard();
+                      });
+                    }
+                  },
+                  // Set return button styling
+                  icon: const Icon(
+                    CupertinoIcons.back,
+                    size: 35,
+                    color: kPrimaryColor,
                   ),
-                  ProgressBar(
-                      currentQuestion: _currentIndex, totalQuestions: 24),
-                  Expanded(
-                    child: IconButton(
-                      padding: const EdgeInsets.only(bottom: 5.0),
-                      onPressed: () {
-                        if (_currentIndex < 24) {
-                          setState(() {
-                            _nextCard();
-                          });
-                        } else {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ResultsPage()));
-                        }
-                      },
-                      // Set "next" button styling
-                      icon: const Icon(
-                        CupertinoIcons.forward,
-                        size: 35,
-                        color: kPrimaryColor,
-                      ),
-                    ),
+                ),
+                ProgressBar(currentQuestion: _currentIndex, totalQuestions: 24),
+                IconButton(
+                  padding: const EdgeInsets.only(bottom: 5.0),
+                  onPressed: () {
+                    if (_currentIndex < 24) {
+                      setState(() {
+                        _nextCard();
+                      });
+                    } else {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ResultsPage()));
+                    }
+                  },
+                  // Set "next" button styling
+                  icon: const Icon(
+                    CupertinoIcons.forward,
+                    size: 35,
+                    color: kPrimaryColor,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Expanded(
               child: Center(
-                heightFactor: 3,
                 child: Container(
                   height: 350,
-                  width: 250,
+                  width: 300,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: kPrimaryColor, width: 10),
@@ -188,40 +180,37 @@ class _FlashcardsViewState extends State<FlashcardsView> {
                 ),
               ),
             ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.bottomRight,
-                padding: const EdgeInsets.only(right: 20, bottom: 20),
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateColor.resolveWith(
-                            (states) => kSecondaryColor),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(33.0))),
-                        textStyle: MaterialStateProperty.all(
-                            const TextStyle(fontSize: 18)),
-                        minimumSize:
-                            MaterialStateProperty.all(const Size(150, 45))),
-                    onPressed: () {
-                      if (_currentIndex < 23) {
-                        setState(() {
-                          _nextCard();
-                        });
-                      } else {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ResultsPage(),
-                          ),
-                        );
-                      }
-                    },
-                    child: Text(_currentIndex < 23 ? 'NEXT' : 'See Results',
-                        style: const TextStyle(fontWeight: FontWeight.bold))),
-              ),
-            )
+            Container(
+              alignment: Alignment.bottomRight,
+              padding: const EdgeInsets.only(right: 20, bottom: 20),
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => kSecondaryColor),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(33.0))),
+                      textStyle: MaterialStateProperty.all(
+                          const TextStyle(fontSize: 18)),
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(150, 45))),
+                  onPressed: () {
+                    if (_currentIndex < 23) {
+                      setState(() {
+                        _nextCard();
+                      });
+                    } else {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ResultsPage(),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text(_currentIndex < 23 ? 'NEXT' : 'See Results',
+                      style: const TextStyle(fontWeight: FontWeight.bold))),
+            ),
           ],
         ),
       ),
